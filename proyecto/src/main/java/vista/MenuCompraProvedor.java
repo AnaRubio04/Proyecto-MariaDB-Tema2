@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
-package Vista;
+package vista;
 
 /**
  *
@@ -107,6 +107,7 @@ public class MenuCompraProvedor extends javax.swing.JFrame {
     private void btnConsultarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarCompraActionPerformed
         // TODO add your handling code here:
         new Consultar().setVisible(true);
+       
         this.dispose();
     }//GEN-LAST:event_btnConsultarCompraActionPerformed
 

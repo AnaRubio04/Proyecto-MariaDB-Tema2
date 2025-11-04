@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Vista;
+package vista;
 
-import Controlador.DetalleCompra;
-import Controlador.gestionSQL;
+
 import javax.swing.table.DefaultTableModel;
+import vista.MenuCompraProvedor;
 
 /**
  *
@@ -181,6 +181,6 @@ public class Consultar extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
     DefaultTableModel modelo;
-    gestionSQL controlador = new gestionSQL();
+   
     
 }
