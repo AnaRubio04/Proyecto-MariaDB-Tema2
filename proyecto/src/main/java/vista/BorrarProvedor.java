@@ -4,17 +4,34 @@
  */
 package vista;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import modelo.Proveedor;
+import persistencia.Conexion;
+
 /**
  *
  * @author Diurno
  */
 public class BorrarProvedor extends javax.swing.JFrame {
 
+    Conexion con = new Conexion();
+    private ArrayList<Proveedor> listaProveedores;
+
     /**
      * Creates new form BorrarProvedor
      */
     public BorrarProvedor() {
         initComponents();
+        cargarProveedores();
+    }
+
+    private void cargarProveedores() {
+        listaProveedores = con.obtenerProveedores();
+        cmBoxProveedores.removeAllItems();
+        for (Proveedor p : listaProveedores) {
+            cmBoxProveedores.addItem(p.getNombre());
+        }
     }
 
     /**
@@ -28,7 +45,7 @@ public class BorrarProvedor extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        cmBoxProvedores = new javax.swing.JComboBox<>();
+        cmBoxProveedores = new javax.swing.JComboBox<>();
         btnVolver = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
 
@@ -36,13 +53,13 @@ public class BorrarProvedor extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
-        jLabel1.setText("Borrar Provedor");
+        jLabel1.setText("Borrar Proveedor");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, -1));
 
         jLabel2.setText("Selecciona un provedor:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
 
-        getContentPane().add(cmBoxProvedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, -1, -1));
+        getContentPane().add(cmBoxProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, -1, -1));
 
         btnVolver.setText("Volver al menú");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
@@ -53,6 +70,11 @@ public class BorrarProvedor extends javax.swing.JFrame {
         getContentPane().add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, -1, -1));
 
         btnBorrar.setText("Borrar");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 220, -1, -1));
 
         pack();
@@ -64,6 +86,22 @@ public class BorrarProvedor extends javax.swing.JFrame {
         new MenuCompraProvedor().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        // TODO add your handling code here:
+        int seleccionado=cmBoxProveedores.getSelectedIndex();
+        
+         Proveedor provEscogido = listaProveedores.get(seleccionado);
+         
+        int confirmar = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar a " + provEscogido.getNombre() + "?", "Confirmar eliminación",JOptionPane.YES_NO_OPTION);
+
+        if (confirmar == JOptionPane.YES_OPTION) {
+            con.eliminarProveedor(provEscogido.getIdProveedor());
+            JOptionPane.showMessageDialog(this, "Proveedor eliminado correctamente.");
+            cargarProveedores();
+        }
+        
+    }//GEN-LAST:event_btnBorrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -103,7 +141,7 @@ public class BorrarProvedor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JComboBox<String> cmBoxProvedores;
+    private javax.swing.JComboBox<String> cmBoxProveedores;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
