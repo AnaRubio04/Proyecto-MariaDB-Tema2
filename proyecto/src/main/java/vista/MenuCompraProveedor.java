@@ -9,10 +9,10 @@ package vista;
  *
  * @author Diurno
  */
-public class MenuCompraProvedor extends javax.swing.JFrame {
+public class MenuCompraProveedor extends javax.swing.JFrame {
 
     /** Creates new form VentanaPrincipal */
-    public MenuCompraProvedor() {
+    public MenuCompraProveedor() {
         initComponents();
     }
 
@@ -29,7 +29,7 @@ public class MenuCompraProvedor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnActPrecio = new javax.swing.JButton();
         btnConsultarCompra = new javax.swing.JButton();
-        btnEliminarProvedor = new javax.swing.JButton();
+        btnEliminarProveedor = new javax.swing.JButton();
         btnModCompra = new javax.swing.JButton();
         btnCrear = new javax.swing.JButton();
 
@@ -45,7 +45,7 @@ public class MenuCompraProvedor extends javax.swing.JFrame {
         getContentPane().add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 240, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
-        jLabel1.setText("Menú Compras de Provedores");
+        jLabel1.setText("Menú Compras de Proveedores");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 270, 30));
         jLabel1.getAccessibleContext().setAccessibleName("");
 
@@ -65,13 +65,13 @@ public class MenuCompraProvedor extends javax.swing.JFrame {
         });
         getContentPane().add(btnConsultarCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, -1, -1));
 
-        btnEliminarProvedor.setText("Eliminar Provedor");
-        btnEliminarProvedor.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarProveedor.setText("Eliminar Proveedor");
+        btnEliminarProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarProvedorActionPerformed(evt);
+                btnEliminarProveedorActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEliminarProvedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, -1, -1));
+        getContentPane().add(btnEliminarProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, -1, -1));
 
         btnModCompra.setText("Modificar Compra");
         btnModCompra.addActionListener(new java.awt.event.ActionListener() {
@@ -81,13 +81,13 @@ public class MenuCompraProvedor extends javax.swing.JFrame {
         });
         getContentPane().add(btnModCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, -1, -1));
 
-        btnCrear.setText("Crear Provedor");
+        btnCrear.setText("Insertar Proveedor");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
+        getContentPane().add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -100,7 +100,7 @@ public class MenuCompraProvedor extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
-        new CrearProvedor().setVisible(true);
+        new CrearProveedor().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCrearActionPerformed
 
@@ -111,11 +111,11 @@ public class MenuCompraProvedor extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnConsultarCompraActionPerformed
 
-    private void btnEliminarProvedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProvedorActionPerformed
+    private void btnEliminarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProveedorActionPerformed
         // TODO add your handling code here:
-        new BorrarProvedor().setVisible(true);
+        new BorrarProveedor().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnEliminarProvedorActionPerformed
+    }//GEN-LAST:event_btnEliminarProveedorActionPerformed
 
     private void btnActPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActPrecioActionPerformed
         // TODO add your handling code here:
@@ -146,21 +146,23 @@ public class MenuCompraProvedor extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuCompraProvedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuCompraProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuCompraProvedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuCompraProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuCompraProvedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuCompraProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuCompraProvedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuCompraProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuCompraProvedor().setVisible(true);
+                new MenuCompraProveedor().setVisible(true);
             }
         });
     }
@@ -170,7 +172,7 @@ public class MenuCompraProvedor extends javax.swing.JFrame {
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnConsultarCompra;
     private javax.swing.JButton btnCrear;
-    private javax.swing.JButton btnEliminarProvedor;
+    private javax.swing.JButton btnEliminarProveedor;
     private javax.swing.JButton btnModCompra;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
