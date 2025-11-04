@@ -4,16 +4,22 @@
  */
 package vista;
 
+import javax.swing.JOptionPane;
+import modelo.Proveedor;
+import persistencia.Conexion;
+
 /**
  *
  * @author Diurno
  */
-public class CrearProvedor extends javax.swing.JFrame {
+public class CrearProveedor extends javax.swing.JFrame {
+
+   Conexion con = new Conexion();
 
     /**
      * Creates new form CrearProvedor
      */
-    public CrearProvedor() {
+    public CrearProveedor() {
         initComponents();
     }
 
@@ -46,23 +52,28 @@ public class CrearProvedor extends javax.swing.JFrame {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         jLabel2.setText("Nombre              :");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
 
         jLabel3.setText("Contacto             :");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
 
         jLabel4.setText("Email                   :");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
 
         jLabel5.setText("Dirección            :");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
 
         btnAnadir.setText("Añadir");
+        btnAnadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnadirActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnAnadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 270, -1, -1));
-        getContentPane().add(txtContacto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 270, 20));
-        getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 270, 20));
-        getContentPane().add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 270, 20));
-        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 270, 20));
+        getContentPane().add(txtContacto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 270, 30));
+        getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 270, 30));
+        getContentPane().add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 270, 30));
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 270, 30));
 
         btnVolver.setText("Volver al menú");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
@@ -82,9 +93,44 @@ public class CrearProvedor extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
+        // TODO add your handling code here:
+        String nombre = txtNombre.getText();
+        String email = txtEmail.getText();
+        String contacto = txtContacto.getText();
+        String direccion = txtDireccion.getText();
+        if (nombre.isEmpty() || direccion.isEmpty() || contacto.isEmpty() || email.isEmpty()) {
+            JOptionPane.showInternalMessageDialog(this, "Los campos son obligatorios");
+            return;
+        }
+
+        try {
+            int contactoI = Integer.parseInt(contacto);
+            Proveedor p = new Proveedor(nombre, email, direccion, contactoI);
+            if (con == null) {
+                JOptionPane.showMessageDialog(null, "Error: no se pudo conectar a la base de datos");
+                return;
+            }
+                con.insertarProveedor(nombre, contactoI, email, direccion);
+                JOptionPane.showMessageDialog(this, "Proveedor insertado correctamente");
+            }catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "El campo 'Contacto' debe ser numérico");
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "No se ha podido insertar");
+        }
+        limpiarCampos();
+
+    }//GEN-LAST:event_btnAnadirActionPerformed
+
+    private void limpiarCampos(){
+        txtNombre.setText("");
+        txtEmail.setText("");
+        txtContacto.setText("");
+        txtDireccion.setText("");
+    }
     /**
-     * @param args the command line arguments
-     */
+         * @param args the command line arguments
+         */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -99,20 +145,21 @@ public class CrearProvedor extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CrearProvedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CrearProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CrearProvedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CrearProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CrearProvedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CrearProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CrearProvedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CrearProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CrearProvedor().setVisible(true);
+                new CrearProveedor().setVisible(true);
             }
         });
     }
