@@ -4,19 +4,36 @@
  */
 package vista;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import modelo.Producto;
+import persistencia.Conexion;
+
 /**
  *
  * @author Diurno
  */
 public class ActualizarPrecio extends javax.swing.JFrame {
 
+    Conexion con = new Conexion();
+    ArrayList<Producto> productos = new ArrayList<>();
+    
     /**
      * Creates new form ActualizarPrecio
      */
     public ActualizarPrecio() {
         initComponents();
+        cargarDatos();
     }
 
+    public void cargarDatos(){ 
+        productos=con.sacarIdProductos();
+        for (Producto producto : productos) {
+            String a = String.valueOf(producto.getNombre());
+            cmBoxProductos.addItem(a);
+        }
+            
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,6 +54,7 @@ public class ActualizarPrecio extends javax.swing.JFrame {
         btnActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(480, 320));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
@@ -46,13 +64,18 @@ public class ActualizarPrecio extends javax.swing.JFrame {
         jLabel2.setText("Seleccione el producto:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 83, -1, -1));
 
+        cmBoxProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmBoxProductosActionPerformed(evt);
+            }
+        });
         getContentPane().add(cmBoxProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, -1, -1));
 
         jLabel3.setText("Precio actual:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 83, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, -1, -1));
 
         lblPrecioActual.setText("00.00");
-        getContentPane().add(lblPrecioActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(317, 83, -1, -1));
+        getContentPane().add(lblPrecioActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 160, 40, 20));
 
         jLabel4.setText("Nuevo Precio:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 156, -1, -1));
@@ -64,10 +87,15 @@ public class ActualizarPrecio extends javax.swing.JFrame {
                 btnVolverActionPerformed(evt);
             }
         });
-        getContentPane().add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(47, 230, -1, -1));
+        getContentPane().add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, -1, -1));
 
         btnActualizar.setText("Actualizar");
-        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(305, 230, -1, -1));
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -78,6 +106,33 @@ public class ActualizarPrecio extends javax.swing.JFrame {
         new MenuCompraProveedor().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        try{
+            String producto = cmBoxProductos.getSelectedItem().toString();
+            double nuevoPrecio = Double.parseDouble(txtNuevoPrecio.getText());
+            con.actualizarPrecioProducto(producto, nuevoPrecio);
+            
+            JOptionPane.showMessageDialog(null, "Nuevo Precio actualizado correctamente.");
+            
+            new ActualizarPrecio().setVisible(true);
+            this.dispose();
+        }catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Error al leer el Nuevo Precio.");
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void cmBoxProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmBoxProductosActionPerformed
+        // TODO add your handling code here:
+        for (Producto producto : productos) {
+            String a = String.valueOf(producto.getNombre());
+            if(cmBoxProductos.getSelectedItem().equals(a)){
+                lblPrecioActual.setText(String.valueOf(producto.getPrecio()));
+                
+            }
+        }
+    }//GEN-LAST:event_cmBoxProductosActionPerformed
 
     /**
      * @param args the command line arguments

@@ -5,7 +5,13 @@
 package vista;
 
 
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.table.DefaultTableModel;
+import modelo.Compra;
+import modelo.CompraDetalleView;
+import modelo.Proveedor;
+import persistencia.Conexion;
 import vista.MenuCompraProveedor;
 
 /**
@@ -14,6 +20,12 @@ import vista.MenuCompraProveedor;
  */
 public class Consultar extends javax.swing.JFrame {
 
+    DefaultTableModel modelo;
+    Conexion con = new Conexion();
+    ArrayList<Proveedor> proveedores = new ArrayList<>();
+    ArrayList<Compra> compras = new ArrayList<>();
+    ArrayList<CompraDetalleView> viewCompras = new ArrayList<>();
+    
     /**
      * Creates new form Consultar
      */
@@ -23,12 +35,25 @@ public class Consultar extends javax.swing.JFrame {
         
         modelo.setRowCount(0);
         
+        cargarDatos();
         /*if(cmBoxProvedores.getSelectedItem().equals("Ninguno")){
             for (DetalleCompra detalle : controlador.consultarCompraPorProveedor()) {
                 Object[] fila = { empleado.getId(), empleado.getApellido(), empleado.getOficio(), empleado.getLoc()};
                 modelo.addRow(fila);
             }
         }*/
+    }
+    
+    public void cargarDatos(){
+        proveedores = con.sacarProveedores();
+        for (Proveedor proveedor : proveedores) {
+            cmBoxProvedores.addItem(proveedor.getNombre());
+        }
+        
+        compras = con.sacarFechas();
+        for (Compra compra : compras) {
+            cmBoxFechas.addItem(compra.getFechaString());
+        }
     }
 
     /**
@@ -53,6 +78,7 @@ public class Consultar extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(800, 430));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
@@ -76,13 +102,13 @@ public class Consultar extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID COMPRA", "ID PROVEDOR", "PRODUCTO", "CANTIDAD", "PRECIO"
+                "ID COMPRA", "ID PROVEDOR", "PRODUCTO", "CANTIDAD", "PRECIO", "FECHA"
             }
         ));
         jTable1.setUpdateSelectionOnSort(false);
@@ -108,10 +134,20 @@ public class Consultar extends javax.swing.JFrame {
         getContentPane().add(btnProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 140, 30));
 
         btnFecha.setText("Buscar Fecha");
+        btnFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFechaActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 140, 30));
 
         jButton1.setText("Buscar Fecha y Pro.");
         jButton1.setActionCommand("");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 140, 40));
 
         pack();
@@ -130,7 +166,69 @@ public class Consultar extends javax.swing.JFrame {
 
     private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
         // TODO add your handling code here:
+        viewCompras.clear();
+        modelo.setRowCount(0);
+        
+        int id_proveedor=0;
+        for (Proveedor proveedor : proveedores) {
+            if(proveedor.getNombre().equals( cmBoxProvedores.getSelectedItem())){
+                id_proveedor=proveedor.getIdProveedor();
+            }
+        }
+
+        viewCompras = con.consultarCompraPorProveedor(id_proveedor);
+        
+        for (CompraDetalleView viewCompra : viewCompras) {
+            Object[] fila = {viewCompra.getId_compra(),viewCompra.getId_proveedor(),viewCompra.getId_producto(),viewCompra.getCantidad(),viewCompra.getPrecio(),viewCompra.getFechaString()};
+            modelo.addRow(fila);
+        }
+        
     }//GEN-LAST:event_btnProveedorActionPerformed
+
+    private void btnFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFechaActionPerformed
+        // TODO add your handling code here:
+        viewCompras.clear();
+        modelo.setRowCount(0);
+        Date fechaBuscada = null;
+        for (Compra compra : compras) {
+            if(compra.getFechaString().equals(cmBoxFechas.getSelectedItem())){
+                fechaBuscada= compra.getFecha();
+            }
+        }
+        
+        viewCompras = con.consultarCompraPorFecha(fechaBuscada);
+        
+        for (CompraDetalleView viewCompra : viewCompras) {
+            Object[] fila = {viewCompra.getId_compra(),viewCompra.getId_proveedor(),viewCompra.getId_producto(),viewCompra.getCantidad(),viewCompra.getPrecio(),viewCompra.getFechaString()};
+            modelo.addRow(fila);
+        }
+    }//GEN-LAST:event_btnFechaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        viewCompras.clear();
+        modelo.setRowCount(0);
+        Date fechaBuscada = null;
+        for (Compra compra : compras) {
+            if(compra.getFechaString().equals(cmBoxFechas.getSelectedItem())){
+                fechaBuscada= compra.getFecha();
+            }
+        }
+        
+        int id_proveedor=0;
+        for (Proveedor proveedor : proveedores) {
+            if(proveedor.getNombre().equals( cmBoxProvedores.getSelectedItem())){
+                id_proveedor=proveedor.getIdProveedor();
+            }
+        }
+        
+        viewCompras = con.consultarCompraPorProveedoryFecha(id_proveedor, fechaBuscada);
+        
+        for (CompraDetalleView viewCompra : viewCompras) {
+            Object[] fila = {viewCompra.getId_compra(),viewCompra.getId_proveedor(),viewCompra.getId_producto(),viewCompra.getCantidad(),viewCompra.getPrecio(),viewCompra.getFechaString()};
+            modelo.addRow(fila);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,7 +278,5 @@ public class Consultar extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
-    DefaultTableModel modelo;
-   
-    
+       
 }
