@@ -108,7 +108,7 @@ public class Consultar extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "ID COMPRA", "ID PROVEDOR", "PRODUCTO", "CANTIDAD", "PRECIO", "FECHA"
+                "ID COMPRA", "ID PROVEEDOR", "PRODUCTO", "CANTIDAD", "PRECIO", "FECHA"
             }
         ));
         jTable1.setUpdateSelectionOnSort(false);

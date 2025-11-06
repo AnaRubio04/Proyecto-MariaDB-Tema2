@@ -13,7 +13,7 @@ import persistencia.Conexion;
  *
  * @author Diurno
  */
-public class BorrarProvedor extends javax.swing.JFrame {
+public class BorrarProveedor extends javax.swing.JFrame {
 
     Conexion con = new Conexion();
     private ArrayList<Proveedor> listaProveedores;
@@ -21,7 +21,7 @@ public class BorrarProvedor extends javax.swing.JFrame {
     /**
      * Creates new form BorrarProvedor
      */
-    public BorrarProvedor() {
+    public BorrarProveedor() {
         initComponents();
         cargarProveedores();
     }
@@ -120,20 +120,21 @@ public class BorrarProvedor extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BorrarProvedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BorrarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BorrarProvedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BorrarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BorrarProvedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BorrarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BorrarProvedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BorrarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BorrarProvedor().setVisible(true);
+                new BorrarProveedor().setVisible(true);
             }
         });
     }

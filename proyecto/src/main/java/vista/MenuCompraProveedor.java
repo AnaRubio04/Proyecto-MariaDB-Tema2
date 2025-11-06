@@ -113,7 +113,7 @@ public class MenuCompraProveedor extends javax.swing.JFrame {
 
     private void btnEliminarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProveedorActionPerformed
         // TODO add your handling code here:
-        new BorrarProvedor().setVisible(true);
+        new BorrarProveedor().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnEliminarProveedorActionPerformed
 
