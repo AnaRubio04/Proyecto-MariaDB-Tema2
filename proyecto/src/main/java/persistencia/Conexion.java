@@ -374,4 +374,24 @@ public class Conexion {
 
     return detalle;
 }
+    public String obtenerNombreProductoPorId(int idProducto) {
+    String nombre = "";
+    String sql = "SELECT nombre FROM productos WHERE id_producto = ?";
+
+    try (Connection con = getConnection();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+
+        ps.setInt(1, idProducto);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                nombre = rs.getString("nombre");
+            }
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Error al obtener el nombre del producto: " + e.getMessage());
+    }
+
+    return nombre;
+}
 }

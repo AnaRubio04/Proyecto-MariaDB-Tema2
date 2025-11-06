@@ -175,15 +175,12 @@ private Conexion con = new Conexion();
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
   private void mostrarDatosCompra(int idCompra) {
-        DetalleCompra detalle = con.obtenerDetalleCompraPorId(idCompra);
-        if (detalle != null) {
-            lblProducto.setText("ID: " + detalle.getId_producto());
-            txtCantidad.setText(String.valueOf(detalle.getCantidad()));
-            txtPrecio.setText(String.valueOf(detalle.getPrecio()));
-        } else {
-            lblProducto.setText("No encontrado");
-            txtCantidad.setText("");
-            txtPrecio.setText("");
-        }
+    DetalleCompra detalle = con.obtenerDetalleCompraPorId(idCompra);
+     String nombreProducto = con.obtenerNombreProductoPorId(detalle.getId_producto());
+ 
+        lblProducto.setText( nombreProducto);
+        txtCantidad.setText(String.valueOf(detalle.getCantidad()));
+        txtPrecio.setText(String.valueOf(detalle.getPrecio()));
+  
     }
 }
