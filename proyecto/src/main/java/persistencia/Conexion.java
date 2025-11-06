@@ -82,21 +82,26 @@ public class Conexion {
         }
     }
 
-    public void modificarCompra(int idCompra, Date fecha, int idProveedor) {
-        String sql = """
-                     UPDATE compras 
-                     SET id_proveedor=? , fecha=? 
-                     WHERE id_compra=?;
-                     """;
-        try (Connection con=getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);){
-            ps.setInt(1, idProveedor);
-            ps.setDate(2, (java.sql.Date) fecha);
-            ps.setInt(3, idCompra);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("No se ha podido modificar la compra: " + e.getMessage());
-        }
+    public void modificarDetalleCompra(int idCompra, int cantidad, double precio) {
+                String sql = """
+                             UPDATE detalle_compra 
+                             SET cantidad = ?, precio = ?
+                             WHERE id_compra = ?;
+                             """;
+
+                try (Connection con = getConnection();
+                 PreparedStatement ps = con.prepareStatement(sql)) {
+
+                        ps.setInt(1, cantidad);
+                        ps.setDouble(2, precio);
+                        ps.setInt(3, idCompra);
+
+                        
+                        ps.executeUpdate();
+                    
+                } catch (SQLException e) {
+                         System.err.println("Error al modificar la compra: " + e.getMessage());
+    }
     }
 //    public void eliminarProveedor(int idProveedor) {
 //        String sql = "DELETE FROM proveedores WHERE id_proveedor=?";
@@ -108,6 +113,7 @@ public class Conexion {
 //            System.err.println("No se ha podido eliminar el proveedor: " + e.getMessage());
 //        }
 //    }
+
     public void eliminarProveedor(int idProveedor) {
         String sql = "{ CALL eliminar_proveedor(?) }";
             try (Connection con = getConnection();
@@ -116,11 +122,11 @@ public class Conexion {
             cs.setInt(1, idProveedor);
             cs.execute();
 
-            } catch (SQLException e) {
-                System.err.println("No se ha podido eliminar el proveedor: " + e.getMessage());
-            }
-}
-    
+        } catch (SQLException e) {
+            System.err.println("No se ha podido eliminar el proveedor: " + e.getMessage());
+        }
+    }
+
     public ArrayList<CompraDetalleView> consultarCompraPorProveedor(int idProveedor) {
 
         ArrayList<CompraDetalleView> dCompras = new ArrayList<>();
@@ -144,8 +150,8 @@ public class Conexion {
                 int cantidad = resul.getInt("d.cantidad");
                 double precio = resul.getDouble("d.precio");
                 Date fecha = resul.getDate("c.fecha");
-                dCompras.add(new CompraDetalleView(id_compra, id_proveedor, id_producto, cantidad, precio,fecha));
-                
+                dCompras.add(new CompraDetalleView(id_compra, id_proveedor, id_producto, cantidad, precio, fecha));
+
             }
 
         } catch (SQLException e) {
@@ -177,8 +183,8 @@ public class Conexion {
                 int cantidad = resul.getInt("d.cantidad");
                 double precio = resul.getDouble("d.precio");
                 Date fecha = resul.getDate("c.fecha");
-                dCompras.add(new CompraDetalleView(id_compra, id_proveedor, id_producto, cantidad, precio,fecha));
-                
+                dCompras.add(new CompraDetalleView(id_compra, id_proveedor, id_producto, cantidad, precio, fecha));
+
             }
 
         } catch (SQLException e) {
@@ -186,7 +192,7 @@ public class Conexion {
         }
         return dCompras;
     }
-    
+
     public ArrayList<CompraDetalleView> consultarCompraPorProveedoryFecha(int provedor, Date fechaBuscada) {
 
         ArrayList<CompraDetalleView> dCompras = new ArrayList<>();
@@ -211,8 +217,8 @@ public class Conexion {
                 int cantidad = resul.getInt("d.cantidad");
                 double precio = resul.getDouble("d.precio");
                 Date fecha = resul.getDate("c.fecha");
-                dCompras.add(new CompraDetalleView(id_compra, id_proveedor, id_producto, cantidad, precio,fecha));
-                
+                dCompras.add(new CompraDetalleView(id_compra, id_proveedor, id_producto, cantidad, precio, fecha));
+
             }
 
         } catch (SQLException e) {
@@ -220,7 +226,7 @@ public class Conexion {
         }
         return dCompras;
     }
-    
+
     public ArrayList<Proveedor> obtenerProveedores() {
         ArrayList<Proveedor> proveedores = new ArrayList<>();
         String sql = "SELECT id_proveedor, nombre, email, direccion, contacto FROM proveedores";
@@ -241,34 +247,34 @@ public class Conexion {
         }
         return proveedores;
     }
-    
+
     public ArrayList<Producto> sacarIdProductos() {
-        
+
         ArrayList<Producto> productos = new ArrayList<>();
         String sql = """
                      SELECT *
                      FROM productos; 
                      """;
-                                                        
+
         try (Connection con=getConnection();
             PreparedStatement ps = con.prepareStatement(sql);){
-           
+
             ResultSet resul = ps.executeQuery();
             while (resul.next()) {
                 int id = resul.getInt(1);
                 int id_proveedor = resul.getInt(2);
                 String nombre = resul.getString(3);
                 double precio = resul.getDouble(4);
-                int stock= resul.getInt(5);
-                productos.add(new Producto(id, id_proveedor, nombre, precio,stock));
+                int stock = resul.getInt(5);
+                productos.add(new Producto(id, id_proveedor, nombre, precio, stock));
             }
-            
+
         } catch (SQLException e) {
             e.getMessage();
         }
         return productos;
     }
-    
+
 //    public ArrayList<Proveedor> sacarProveedores() {
 //        
 //        ArrayList<Proveedor> proveedores = new ArrayList<>();
@@ -295,18 +301,17 @@ public class Conexion {
 //        }
 //        return proveedores;
 //    }
-    
     public ArrayList<Compra> sacarFechas() {
-        
+
         ArrayList<Compra> compras = new ArrayList<>();
         String sql = """
                      SELECT *
                      FROM compras; 
                      """;
-                                                        
+
         try (Connection con=getConnection();
             PreparedStatement ps = con.prepareStatement(sql);){
-           
+
             ResultSet resul = ps.executeQuery();
             while (resul.next()) {
                 int id_compra = resul.getInt(1);
@@ -314,11 +319,59 @@ public class Conexion {
                 Date fecha = (Date) resul.getDate(3);
                 compras.add(new Compra(id_compra, id_proveedor, fecha));
             }
-            
+
         } catch (SQLException e) {
             e.getMessage();
         }
         return compras;
     }
-    
+
+    public ArrayList<Integer> obtenerIdsCompras() {
+        ArrayList<Integer> compras = new ArrayList<>();
+        String sql = "SELECT id_compra FROM compras ORDER BY id_compra";
+
+        try (Connection con = getConnection(); 
+              PreparedStatement ps = con.prepareStatement(sql);
+              ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                compras.add(rs.getInt("id_compra"));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al obtener IDs de compras: " + e.getMessage());
+        }
+
+        return compras;
+
+    }
+    public DetalleCompra obtenerDetalleCompraPorId(int idCompra) {
+    DetalleCompra detalle = null;
+    String sql = """
+                 SELECT id_compra, id_proveedor, id_producto, cantidad, precio
+                 FROM detalle_compra
+                 WHERE id_compra = ?
+                 """;
+
+    try (Connection con = getConnection();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+
+        ps.setInt(1, idCompra);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                int idProveedor = rs.getInt("id_proveedor");
+                int idProducto = rs.getInt("id_producto");
+                int cantidad = rs.getInt("cantidad");
+                double precio = rs.getDouble("precio");
+
+                detalle = new DetalleCompra(idCompra, idProveedor, idProducto, cantidad, precio);
+            }
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Error al obtener el detalle de la compra con ID " + idCompra + ": " + e.getMessage());
+    }
+
+    return detalle;
+}
 }
