@@ -14,21 +14,25 @@ import persistencia.Conexion;
  * @author Diurno
  */
 public class ModificarCompra extends javax.swing.JFrame {
-private Conexion con = new Conexion();
+
+    private Conexion con = new Conexion();
+
     /**
      * Creates new form ModificarCompra
      */
     public ModificarCompra() {
         initComponents();
         cargarIdsCompras();
-           cmBoxCompras.addActionListener(e -> {
+        cmBoxCompras.addActionListener(e -> {
             if (cmBoxCompras.getSelectedItem() != null) {
                 int id = Integer.parseInt(cmBoxCompras.getSelectedItem().toString());
                 mostrarDatosCompra(id);
             }
         });
-    
+        lblProducto.setText("—");
+
     }
+
     private void cargarIdsCompras() {
         cmBoxCompras.removeAllItems();
         ArrayList<Integer> ids = con.obtenerIdsCompras();
@@ -68,7 +72,7 @@ private Conexion con = new Conexion();
         jLabel2.setText("ID de compra:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 82, -1, -1));
 
-        getContentPane().add(cmBoxCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 79, -1, -1));
+        getContentPane().add(cmBoxCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 71, 100, 30));
 
         jLabel3.setText("Cantidad:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 122, -1, -1));
@@ -81,8 +85,8 @@ private Conexion con = new Conexion();
 
         lblProducto.setText("produ");
         getContentPane().add(lblProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(364, 82, -1, -1));
-        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 119, 90, 20));
-        getContentPane().add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 159, 90, 20));
+        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 109, 100, 30));
+        getContentPane().add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 149, 100, 30));
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -112,18 +116,21 @@ private Conexion con = new Conexion();
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-          try {
+        try {
             int idCompra = Integer.parseInt((String) cmBoxCompras.getSelectedItem());
             int cantidad = Integer.parseInt(txtCantidad.getText());
             double precio = Double.parseDouble(txtPrecio.getText());
 
             con.modificarDetalleCompra(idCompra, cantidad, precio);
 
-              JOptionPane.showMessageDialog(this, "Compra modificada correctamente");
+            JOptionPane.showMessageDialog(this, "Compra modificada correctamente");
+            txtCantidad.setText("");
+            txtPrecio.setText("");
+            lblProducto.setText("—");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al modificar la compra: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al modificar la compra: ");
         }
-    
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
@@ -175,12 +182,11 @@ private Conexion con = new Conexion();
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
   private void mostrarDatosCompra(int idCompra) {
-    DetalleCompra detalle = con.obtenerDetalleCompraPorId(idCompra);
-     String nombreProducto = con.obtenerNombreProductoPorId(detalle.getId_producto());
- 
-        lblProducto.setText( nombreProducto);
-        txtCantidad.setText(String.valueOf(detalle.getCantidad()));
-        txtPrecio.setText(String.valueOf(detalle.getPrecio()));
-  
+        DetalleCompra detalle = con.obtenerDetalleCompraPorId(idCompra);
+        String nombreProducto = con.obtenerNombreProductoPorId(detalle.getId_producto());
+
+        lblProducto.setText(nombreProducto);
+       
+
     }
 }
