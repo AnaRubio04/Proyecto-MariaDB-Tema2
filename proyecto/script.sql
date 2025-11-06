@@ -34,9 +34,9 @@ CREATE OR REPLACE TABLE detalle_compra (
 	cantidad INT NOT NULL,
 	precio DECIMAL(10,2),
 	
-	CONSTRAINT fk_id_com FOREIGN KEY (id_compra) REFERENCES compras(id_compra)
-	CONSTRAINT fk_id_prod FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
-	CONSTRAINT fk_id_pro_d FOREIGN KEY (id_proveedor) REFERENCES proveedores(id_proveedor)
+	CONSTRAINT fk_id_com FOREIGN KEY (id_compra) REFERENCES compras(id_compra),
+	CONSTRAINT fk_id_prod FOREIGN KEY (id_producto) REFERENCES productos(id_producto),
+	CONSTRAINT fk_id_pro_d FOREIGN KEY (id_proveedor) REFERENCES proveedores(id_proveedor),
 	
 	CONSTRAINT ck_cantidad CHECK (cantidad>0)
 );
