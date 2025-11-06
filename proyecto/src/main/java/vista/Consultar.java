@@ -45,7 +45,7 @@ public class Consultar extends javax.swing.JFrame {
     }
     
     public void cargarDatos(){
-        proveedores = con.sacarProveedores();
+        proveedores = con.obtenerProveedores();
         for (Proveedor proveedor : proveedores) {
             cmBoxProvedores.addItem(proveedor.getNombre());
         }

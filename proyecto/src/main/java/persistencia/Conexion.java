@@ -4,6 +4,7 @@
  */
 package persistencia;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -97,16 +98,29 @@ public class Conexion {
             System.err.println("No se ha podido modificar la compra: " + e.getMessage());
         }
     }
+//    public void eliminarProveedor(int idProveedor) {
+//        String sql = "DELETE FROM proveedores WHERE id_proveedor=?";
+//        try (Connection con=getConnection();
+//            PreparedStatement ps = con.prepareStatement(sql);){
+//            ps.setInt(1, idProveedor);
+//            ps.executeUpdate();
+//        } catch (SQLException e) {
+//            System.err.println("No se ha podido eliminar el proveedor: " + e.getMessage());
+//        }
+//    }
     public void eliminarProveedor(int idProveedor) {
-        String sql = "DELETE FROM proveedores WHERE id_proveedor=?";
-        try (Connection con=getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);){
-            ps.setInt(1, idProveedor);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("No se ha podido eliminar el proveedor: " + e.getMessage());
-        }
-    }
+        String sql = "{ CALL eliminar_proveedor(?) }";
+            try (Connection con = getConnection();
+            CallableStatement cs = con.prepareCall(sql)) {
+
+            cs.setInt(1, idProveedor);
+            cs.execute();
+
+            } catch (SQLException e) {
+                System.err.println("No se ha podido eliminar el proveedor: " + e.getMessage());
+            }
+}
+    
     public ArrayList<CompraDetalleView> consultarCompraPorProveedor(int idProveedor) {
 
         ArrayList<CompraDetalleView> dCompras = new ArrayList<>();
@@ -255,32 +269,32 @@ public class Conexion {
         return productos;
     }
     
-    public ArrayList<Proveedor> sacarProveedores() {
-        
-        ArrayList<Proveedor> proveedores = new ArrayList<>();
-        String sql = """
-                     SELECT *
-                     FROM proveedores; 
-                     """;
-                                                        
-        try (Connection con=getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);){
-           
-            ResultSet resul = ps.executeQuery();
-            while (resul.next()) {
-                int id = resul.getInt(1);
-                String nombre = resul.getString(2);
-                int contacto = resul.getInt(3);
-                String email = resul.getString(4);
-                String dir = resul.getString(5);
-                proveedores.add(new Proveedor(id, nombre, email, dir, contacto));
-            }
-            
-        } catch (SQLException e) {
-            e.getMessage();
-        }
-        return proveedores;
-    }
+//    public ArrayList<Proveedor> sacarProveedores() {
+//        
+//        ArrayList<Proveedor> proveedores = new ArrayList<>();
+//        String sql = """
+//                     SELECT *
+//                     FROM proveedores; 
+//                     """;
+//                                                        
+//        try (Connection con=getConnection();
+//            PreparedStatement ps = con.prepareStatement(sql);){
+//           
+//            ResultSet resul = ps.executeQuery();
+//            while (resul.next()) {
+//                int id = resul.getInt(1);
+//                String nombre = resul.getString(2);
+//                int contacto = resul.getInt(3);
+//                String email = resul.getString(4);
+//                String dir = resul.getString(5);
+//                proveedores.add(new Proveedor(id, nombre, email, dir, contacto));
+//            }
+//            
+//        } catch (SQLException e) {
+//            e.getMessage();
+//        }
+//        return proveedores;
+//    }
     
     public ArrayList<Compra> sacarFechas() {
         
