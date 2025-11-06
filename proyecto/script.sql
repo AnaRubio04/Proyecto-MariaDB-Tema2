@@ -40,3 +40,38 @@ CREATE OR REPLACE TABLE detalle_compra (
 	
 	CONSTRAINT ck_cantidad CHECK (cantidad>0)
 );
+
+CREATE TABLE proveedores_historico (
+id_historico INT AUTO_INCREMENT PRIMARY KEY,
+id_proveedor INT,
+nombre VARCHAR(100),
+email VARCHAR(100),
+direccion VARCHAR(150),
+contacto INT,
+fecha_eliminacion DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+DELIMITER 
+
+CREATE PROCEDURE eliminar_proveedor(IN p_id INT)
+BEGIN
+    DECLARE v_nombre VARCHAR(100);
+    DECLARE v_email VARCHAR(100);
+    DECLARE v_direccion VARCHAR(150);
+    DECLARE v_contacto INT;
+
+    -- Obtener datos del proveedor antes de eliminarlo
+    SELECT nombre, email, direccion, contacto
+    INTO v_nombre, v_email, v_direccion, v_contacto
+    FROM proveedores
+    WHERE id_proveedor = p_id;
+
+    -- Insertar en tabla histórica
+    INSERT INTO proveedores_historico (id_proveedor, nombre, email, direccion, contacto)
+    VALUES (p_id, v_nombre, v_email, v_direccion, v_contacto);
+
+    -- Eliminar del original
+    DELETE FROM proveedores WHERE id_proveedor = p_id;
+END
+
+DELIMITER ;
