@@ -45,6 +45,7 @@ public class CrearProveedor extends javax.swing.JFrame {
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(510, 370));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
@@ -105,14 +106,18 @@ public class CrearProveedor extends javax.swing.JFrame {
         }
 
         try {
-            int contactoI = Integer.parseInt(contacto);
-            Proveedor p = new Proveedor(nombre, email, direccion, contactoI);
+            //int contactoI = Integer.parseInt(contacto);
+            Proveedor p = new Proveedor(nombre, email, direccion, contacto);
             if (con == null) {
                 JOptionPane.showMessageDialog(null, "Error: no se pudo conectar a la base de datos");
                 return;
             }
-                con.insertarProveedor(nombre, contactoI, email, direccion);
-                JOptionPane.showMessageDialog(this, "Proveedor insertado correctamente");
+                try{
+                    con.insertarProveedor(nombre, contacto, email, direccion);
+                    JOptionPane.showMessageDialog(this, "Proveedor insertado correctamente");
+                }catch (IllegalArgumentException ie){
+                    JOptionPane.showMessageDialog(this, "Número de contacto no válido.");
+                }
             }catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "El campo 'Contacto' debe ser numérico");
         }catch (Exception e) {
