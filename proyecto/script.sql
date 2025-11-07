@@ -51,7 +51,7 @@ contacto INT,
 fecha_eliminacion DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-DELIMITER 
+DELIMITER$$
 
 CREATE PROCEDURE eliminar_proveedor(IN p_id INT)
 BEGIN
@@ -72,6 +72,6 @@ BEGIN
 
     -- Eliminar del original
     DELETE FROM proveedores WHERE id_proveedor = p_id;
-END
+END$$
 
 DELIMITER ;
