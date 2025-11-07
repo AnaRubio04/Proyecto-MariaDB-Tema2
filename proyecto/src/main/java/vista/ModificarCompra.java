@@ -133,6 +133,7 @@ public class ModificarCompra extends javax.swing.JFrame {
             int idCompra = Integer.parseInt((String) cmBoxCompras.getSelectedItem());
             int cantidad = Integer.parseInt(txtCantidad.getText());
             //double precio = Double.parseDouble(txtPrecio.getText());
+            mostrarDatosCompra(idCompra);
 
             con.modificarDetalleCompra(idCompra, cantidad);
 

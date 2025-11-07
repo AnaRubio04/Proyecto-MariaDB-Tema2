@@ -109,27 +109,42 @@ public class ActualizarPrecio extends javax.swing.JFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-        try{
-            String producto = cmBoxProductos.getSelectedItem().toString();
-            double nuevoPrecio = Double.parseDouble(txtNuevoPrecio.getText());
-            con.actualizarPrecioProducto(producto, nuevoPrecio);
-            
-            JOptionPane.showMessageDialog(null, "Nuevo Precio actualizado correctamente.");
-            
-            new ActualizarPrecio().setVisible(true);
-            this.dispose();
-        }catch (NumberFormatException e){
-            JOptionPane.showMessageDialog(null, "Error al leer el Nuevo Precio.");
+      String producto = (String) cmBoxProductos.getSelectedItem();
+        String textoPrecio = txtNuevoPrecio.getText().trim();
+
+        if ( textoPrecio.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto y escribir un precio nuevo.");
+            return;
         }
+
+        double nuevoPrecio = Double.parseDouble(textoPrecio);
+
+        if (nuevoPrecio <= 0) {
+            JOptionPane.showMessageDialog(null, "El precio debe ser mayor que 0.");
+            return;
+        }
+        con.actualizarPrecioProducto(producto, nuevoPrecio);
+         productos = con.sacarIdProductos();
+        
+        lblPrecioActual.setText(String.valueOf(nuevoPrecio));
+          for (Producto p : productos) {
+            if (p.getNombre().equals(producto)) {
+                p.setPrecio(nuevoPrecio);
+                break;
+            }
+        }
+             txtNuevoPrecio.setText("");
+               JOptionPane.showMessageDialog(null, "Precio actualizado correctamente.");
+          
+
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void cmBoxProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmBoxProductosActionPerformed
         // TODO add your handling code here:
-        for (Producto producto : productos) {
-            String a = String.valueOf(producto.getNombre());
-            if(cmBoxProductos.getSelectedItem().equals(a)){
+         for (Producto producto : productos) {
+            if (cmBoxProductos.getSelectedItem() != null &&
+                cmBoxProductos.getSelectedItem().equals(producto.getNombre())) {
                 lblPrecioActual.setText(String.valueOf(producto.getPrecio()));
-                
             }
         }
     }//GEN-LAST:event_cmBoxProductosActionPerformed

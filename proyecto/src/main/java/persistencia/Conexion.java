@@ -346,6 +346,7 @@ public class Conexion {
         return compras;
 
     }
+    
     public DetalleCompra obtenerDetalleCompraPorId(int idCompra) {
     DetalleCompra detalle = null;
     String sql = """
@@ -375,6 +376,7 @@ public class Conexion {
 
     return detalle;
 }
+    
     public String obtenerNombreProductoPorId(int idProducto) {
     String nombre = "";
     String sql = "SELECT nombre FROM productos WHERE id_producto = ?";
@@ -395,6 +397,7 @@ public class Conexion {
 
     return nombre;
 }
+    
     public int obtenerCantidadDetallePorCompra(int idCompra) {
           String sql = "SELECT SUM(cantidad) AS total_cantidad FROM detalle_compra WHERE id_compra = ?";
     int totalCantidad = 0;
@@ -417,26 +420,45 @@ public class Conexion {
         
 }
     
+//    public double obtenerPrecioTotalPorCompra(int idCompra) {
+//        double totalPrecio = 0.0;
+//         String sql = "SELECT  precio AS total_precio FROM detalle_compra WHERE id_compra = ?";
+//    
+//    try (Connection cn = getConnection();
+//         PreparedStatement ps = cn.prepareStatement(sql)) {
+//        
+//        ps.setInt(1, idCompra);
+//        ResultSet rs = ps.executeQuery();
+//        
+//        if (rs.next()) {
+//             totalPrecio = rs.getDouble("total_precio");
+//            
+//        }
+//        
+//    } catch (SQLException e) {
+//        System.err.println("Error al obtener precio total: " + e.getMessage());
+//    }
+//
+//
+//        return totalPrecio;
+//        }
     public double obtenerPrecioTotalPorCompra(int idCompra) {
-        double totalPrecio = 0.0;
-         String sql = "SELECT  precio AS total_precio FROM detalle_compra WHERE id_compra = ?";
-    
+    double precio = 0.0;
+    String sql = """
+                 SELECT p.precio_unitario 
+                 FROM productos p JOIN detalle_compra d ON p.id_producto = d.id_producto 
+                 WHERE d.id_compra = ?;
+                 """;
     try (Connection cn = getConnection();
          PreparedStatement ps = cn.prepareStatement(sql)) {
-        
         ps.setInt(1, idCompra);
         ResultSet rs = ps.executeQuery();
-        
         if (rs.next()) {
-             totalPrecio = rs.getDouble("total_precio");
-            
+            precio = rs.getDouble("precio_unitario");
         }
-        
     } catch (SQLException e) {
-        System.err.println("Error al obtener precio total: " + e.getMessage());
+        System.out.println("Error al obtener precio: " + e.getMessage());
     }
-
-
-        return totalPrecio;
-        }
+    return precio;
+}
 }
