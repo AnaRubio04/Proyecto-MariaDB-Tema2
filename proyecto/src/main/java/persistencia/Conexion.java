@@ -82,10 +82,10 @@ public class Conexion {
         }
     }
 
-    public void modificarDetalleCompra(int idCompra, int cantidad, double precio) {
+    public void modificarDetalleCompra(int idCompra, int cantidad) {
                 String sql = """
                              UPDATE detalle_compra 
-                             SET cantidad = ?, precio = ?
+                             SET cantidad = ?
                              WHERE id_compra = ?;
                              """;
 
@@ -93,8 +93,8 @@ public class Conexion {
                  PreparedStatement ps = con.prepareStatement(sql)) {
 
                         ps.setInt(1, cantidad);
-                        ps.setDouble(2, precio);
-                        ps.setInt(3, idCompra);
+                       // ps.setDouble(2, precio);
+                        ps.setInt(2, idCompra);
 
                         
                         ps.executeUpdate();
@@ -396,45 +396,47 @@ public class Conexion {
     return nombre;
 }
     public int obtenerCantidadDetallePorCompra(int idCompra) {
-        int cantidad = 0;
-        String sql = "SELECT COUNT(*) AS total FROM detalle_compra WHERE id_compra = ?";
-
-        try (Connection cn = getConnection();
-            PreparedStatement ps = cn.prepareStatement(sql)) {
-
-            ps.setInt(1, idCompra);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-            cantidad = rs.getInt("total");
-            }
-
-            } catch (SQLException e) {
-            System.err.println("Error al obtener el nombre del producto: " + e.getMessage());
-             }
-
-            return cantidad;
+          String sql = "SELECT SUM(cantidad) AS total_cantidad FROM detalle_compra WHERE id_compra = ?";
+    int totalCantidad = 0;
+    try (Connection cn = getConnection();
+         PreparedStatement ps = cn.prepareStatement(sql)) {
+        
+        ps.setInt(1, idCompra);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+             totalCantidad = rs.getInt("total_cantidad");
+            
+       
+        }
+        
+    } catch (SQLException e) {
+        System.err.println("Error al obtener cantidad total: " + e.getMessage());
+    }
+        return totalCantidad;
+        
 }
     
     public double obtenerPrecioTotalPorCompra(int idCompra) {
-        double total = 0.0;
-        String sql = "SELECT SUM(cantidad * precio) AS total FROM detalle_compra WHERE id_compra = ?";
-
-        try (Connection cn = getConnection();
-        PreparedStatement ps = cn.prepareStatement(sql)) {
-
+        double totalPrecio = 0.0;
+         String sql = "SELECT  precio AS total_precio FROM detalle_compra WHERE id_compra = ?";
+    
+    try (Connection cn = getConnection();
+         PreparedStatement ps = cn.prepareStatement(sql)) {
+        
         ps.setInt(1, idCompra);
         ResultSet rs = ps.executeQuery();
-
+        
         if (rs.next()) {
-            total = rs.getDouble("total");
-            }
+             totalPrecio = rs.getDouble("total_precio");
+            
+        }
+        
+    } catch (SQLException e) {
+        System.err.println("Error al obtener precio total: " + e.getMessage());
+    }
 
-             } catch (SQLException e) {
-                   System.err.println("Error al obtener el nombre del producto: " + e.getMessage());
-            }
 
-
-        return total;
+        return totalPrecio;
         }
 }

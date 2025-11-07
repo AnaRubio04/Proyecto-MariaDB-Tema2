@@ -56,11 +56,9 @@ public class ModificarCompra extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cmBoxCompras = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         lblProducto = new javax.swing.JLabel();
         txtCantidad = new javax.swing.JTextField();
-        txtPrecio = new javax.swing.JTextField();
         btnModificar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
         lblPrecioActual = new javax.swing.JLabel();
@@ -84,16 +82,12 @@ public class ModificarCompra extends javax.swing.JFrame {
         jLabel3.setText("Cantidad:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 122, -1, -1));
 
-        jLabel4.setText("Precio:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 162, -1, -1));
-
         jLabel5.setText("Producto:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, -1, -1));
 
         lblProducto.setText("produ");
         getContentPane().add(lblProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, -1, -1));
         getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 109, 100, 30));
-        getContentPane().add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 149, 100, 30));
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -112,10 +106,10 @@ public class ModificarCompra extends javax.swing.JFrame {
         getContentPane().add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 226, -1, -1));
 
         lblPrecioActual.setText("cant");
-        getContentPane().add(lblPrecioActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 160, -1, -1));
+        getContentPane().add(lblPrecioActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, -1, -1));
 
-        cantidad.setText("Precio Actual:");
-        getContentPane().add(cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, -1, -1));
+        cantidad.setText("Precio Actual/u:");
+        getContentPane().add(cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, -1, -1));
 
         cantidad1.setText("Cantidad Actual:");
         getContentPane().add(cantidad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, -1, -1));
@@ -138,17 +132,18 @@ public class ModificarCompra extends javax.swing.JFrame {
         try {
             int idCompra = Integer.parseInt((String) cmBoxCompras.getSelectedItem());
             int cantidad = Integer.parseInt(txtCantidad.getText());
-            double precio = Double.parseDouble(txtPrecio.getText());
+            //double precio = Double.parseDouble(txtPrecio.getText());
 
-            con.modificarDetalleCompra(idCompra, cantidad, precio);
+            con.modificarDetalleCompra(idCompra, cantidad);
 
             JOptionPane.showMessageDialog(this, "Compra modificada correctamente");
             txtCantidad.setText("");
-            txtPrecio.setText("");
+           // txtPrecio.setText("");
             lblProducto.setText("—");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al modificar la compra: ");
         }
+        cargarIdsCompras();
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -196,13 +191,11 @@ public class ModificarCompra extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel lblCantidaActual;
     private javax.swing.JLabel lblPrecioActual;
     private javax.swing.JLabel lblProducto;
     private javax.swing.JTextField txtCantidad;
-    private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
   private void mostrarDatosCompra(int idCompra) {
         DetalleCompra detalle = con.obtenerDetalleCompraPorId(idCompra);
