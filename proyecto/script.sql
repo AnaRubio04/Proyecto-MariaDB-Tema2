@@ -3,7 +3,7 @@ USE gestion_compras;
 CREATE OR REPLACE TABLE proveedores (
 	id_proveedor INT AUTO_INCREMENT PRIMARY KEY,
 	nombre VARCHAR(50) NOT NULL,
-	contacto INT(9) NOT NULL,
+	contacto VARCHAR(9) NOT NULL,
 	email VARCHAR(30) NOT NULL,
 	direccion VARCHAR(50) NOT NULL
 );
@@ -51,30 +51,7 @@ contacto INT,
 fecha_eliminacion DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-DELIMITER$$
 
-CREATE PROCEDURE eliminar_proveedor(IN p_id INT)
-BEGIN
-    DECLARE v_nombre VARCHAR(100);
-    DECLARE v_email VARCHAR(100);
-    DECLARE v_direccion VARCHAR(150);
-    DECLARE v_contacto INT;
-
-    -- Obtener datos del proveedor antes de eliminarlo
-    SELECT nombre, email, direccion, contacto
-    INTO v_nombre, v_email, v_direccion, v_contacto
-    FROM proveedores
-    WHERE id_proveedor = p_id;
-
-    -- Insertar en tabla histórica
-    INSERT INTO proveedores_historico (id_proveedor, nombre, email, direccion, contacto)
-    VALUES (p_id, v_nombre, v_email, v_direccion, v_contacto);
-
-    -- Eliminar del original
-    DELETE FROM proveedores WHERE id_proveedor = p_id;
-END$$
-
-DELIMITER ;
 
 INSERT INTO proveedores (nombre, contacto, email, direccion) VALUES
 ('Tech Solutions S.A.', 912345678, 'contacto@techsolutions.com', 'Av. Siempre Viva 123'),
@@ -111,3 +88,37 @@ INSERT INTO detalle_compra (id_compra, id_producto, id_proveedor, cantidad, prec
 (4, 5, 4, 3, 1200.00),
 (5, 6, 5, 20, 25.00),
 (6, 7, 6, 2, 650.00);
+
+
+DELIMITER $$
+
+CREATE OR REPLACE PROCEDURE eliminar_proveedor(IN p_id INT)
+BEGIN
+    DECLARE v_nombre VARCHAR(100);
+    DECLARE v_email VARCHAR(100);
+    DECLARE v_direccion VARCHAR(150);
+    DECLARE v_contacto INT;
+
+    -- Obtener datos del proveedor antes de eliminarlo
+    SELECT nombre, email, direccion, contacto
+    INTO v_nombre, v_email, v_direccion, v_contacto
+    FROM proveedores
+    WHERE id_proveedor = p_id;
+
+    -- Insertar en tabla histórica
+    INSERT INTO proveedores_historico (id_proveedor, nombre, email, direccion, contacto)
+    VALUES (p_id, v_nombre, v_email, v_direccion, v_contacto);
+
+    -- Eliminar del original
+    DELETE FROM proveedores WHERE id_proveedor = p_id;
+END$$
+
+DELIMITER ;
+
+
+
+
+
+
+
+
