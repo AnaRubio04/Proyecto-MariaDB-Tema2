@@ -305,8 +305,9 @@ public class Conexion {
 
         ArrayList<Compra> compras = new ArrayList<>();
         String sql = """
-                     SELECT *
-                     FROM compras; 
+                     SELECT DISTINCT *
+                     FROM compras
+                     GROUP BY fecha;
                      """;
 
         try (Connection con=getConnection();

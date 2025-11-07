@@ -108,18 +108,18 @@ public class CrearProveedor extends javax.swing.JFrame {
         try {
             //int contactoI = Integer.parseInt(contacto);
             Proveedor p = new Proveedor(nombre, email, direccion, contacto);
+            
             if (con == null) {
                 JOptionPane.showMessageDialog(null, "Error: no se pudo conectar a la base de datos");
                 return;
             }
-                try{
-                    con.insertarProveedor(nombre, contacto, email, direccion);
-                    JOptionPane.showMessageDialog(this, "Proveedor insertado correctamente");
-                }catch (IllegalArgumentException ie){
-                    JOptionPane.showMessageDialog(this, "Número de contacto no válido.");
-                }
-            }catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "El campo 'Contacto' debe ser numérico");
+            // Insertar en base de datos
+            con.insertarProveedor(nombre, contacto, email, direccion);
+            JOptionPane.showMessageDialog(this, "Proveedor insertado correctamente.");
+
+        } catch (IllegalArgumentException ie) {
+            // Captura si el constructor lanza la excepción por número inválido
+            JOptionPane.showMessageDialog(this, ie.getMessage());
         }catch (Exception e) {
             JOptionPane.showMessageDialog(this, "No se ha podido insertar");
         }

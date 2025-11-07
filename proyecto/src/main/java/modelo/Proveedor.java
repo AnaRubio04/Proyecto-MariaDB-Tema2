@@ -27,7 +27,7 @@ public class Proveedor {
         this.nombre = nombre;
         this.email = email;
         this.direccion = direccion;
-        this.contacto = contacto;
+        setContacto(contacto);
     }
     
    
