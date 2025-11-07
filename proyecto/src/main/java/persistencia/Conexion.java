@@ -37,13 +37,13 @@ public class Conexion {
         }
     }
 
-    public void insertarProveedor(String nombre, int contacto, String email, String direccion) {
+    public void insertarProveedor(String nombre, String contacto, String email, String direccion) {
         String sql = "INSERT INTO proveedores (nombre,contacto,email,direccion) VALUES (?,?,?,?)";
         try (Connection con=getConnection();
              PreparedStatement ps = con.prepareStatement(sql);){
 
             ps.setString(1, nombre);
-            ps.setInt(2, contacto);
+            ps.setString(2, contacto);
             ps.setString(3, email);
             ps.setString(4, direccion);
             ps.executeUpdate();
@@ -238,7 +238,7 @@ public class Conexion {
                 String nombre = rs.getString("nombre");
                 String email = rs.getString("email");
                 String direccion = rs.getString("direccion");
-                int contacto = rs.getInt("contacto");
+                String contacto = rs.getString("contacto");
                 proveedores.add(new Proveedor(id, nombre, email, direccion, contacto));
             }
 

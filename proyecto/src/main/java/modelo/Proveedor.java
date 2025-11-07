@@ -13,9 +13,9 @@ public class Proveedor {
    private String nombre;
    private String email;
    private String direccion;
-   private int contacto;
+   private String contacto;
 
-    public Proveedor(int idProveedor, String nombre, String email, String direccion, int contacto) {
+    public Proveedor(int idProveedor, String nombre, String email, String direccion, String contacto) {
         this.idProveedor = idProveedor;
         this.nombre = nombre;
         this.email = email;
@@ -23,7 +23,7 @@ public class Proveedor {
         this.contacto = contacto;
     }
 
-    public Proveedor(String nombre, String email, String direccion, int contacto) {
+    public Proveedor(String nombre, String email, String direccion, String contacto) {
         this.nombre = nombre;
         this.email = email;
         this.direccion = direccion;
@@ -64,12 +64,16 @@ public class Proveedor {
         this.direccion = direccion;
     }
 
-    public int getContacto() {
+    public String getContacto() {
         return contacto;
     }
 
-    public void setContacto(int contacto) {
-        this.contacto = contacto;
+    public void setContacto(String contacto) {
+        if (contacto != null && contacto.matches("\\d{9}")) {
+            this.contacto = contacto;
+        } else {
+            throw new IllegalArgumentException("Número de teléfono no válido: " + contacto);
+        }
     }
    
 }
