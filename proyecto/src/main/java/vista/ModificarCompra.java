@@ -30,6 +30,8 @@ public class ModificarCompra extends javax.swing.JFrame {
             }
         });
         lblProducto.setText("—");
+        lblCantidaActual.setText("--");
+        lblPrecioActual.setText("--");
 
     }
 
@@ -61,14 +63,18 @@ public class ModificarCompra extends javax.swing.JFrame {
         txtPrecio = new javax.swing.JTextField();
         btnModificar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
+        lblPrecioActual = new javax.swing.JLabel();
+        cantidad = new javax.swing.JLabel();
+        cantidad1 = new javax.swing.JLabel();
+        lblCantidaActual = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(480, 330));
+        setPreferredSize(new java.awt.Dimension(500, 350));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
         jLabel1.setText("Modificar Compra");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 15, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, -1));
 
         jLabel2.setText("ID de compra:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 82, -1, -1));
@@ -82,10 +88,10 @@ public class ModificarCompra extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 162, -1, -1));
 
         jLabel5.setText("Producto:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(306, 82, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, -1, -1));
 
         lblProducto.setText("produ");
-        getContentPane().add(lblProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(364, 82, -1, -1));
+        getContentPane().add(lblProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, -1, -1));
         getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 109, 100, 30));
         getContentPane().add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 149, 100, 30));
 
@@ -104,6 +110,18 @@ public class ModificarCompra extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 226, -1, -1));
+
+        lblPrecioActual.setText("cant");
+        getContentPane().add(lblPrecioActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 160, -1, -1));
+
+        cantidad.setText("Precio Actual:");
+        getContentPane().add(cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, -1, -1));
+
+        cantidad1.setText("Cantidad Actual:");
+        getContentPane().add(cantidad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, -1, -1));
+
+        lblCantidaActual.setText("cant");
+        getContentPane().add(lblCantidaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 120, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -172,12 +190,16 @@ public class ModificarCompra extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JLabel cantidad;
+    private javax.swing.JLabel cantidad1;
     private javax.swing.JComboBox<String> cmBoxCompras;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblCantidaActual;
+    private javax.swing.JLabel lblPrecioActual;
     private javax.swing.JLabel lblProducto;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtPrecio;
@@ -185,9 +207,12 @@ public class ModificarCompra extends javax.swing.JFrame {
   private void mostrarDatosCompra(int idCompra) {
         DetalleCompra detalle = con.obtenerDetalleCompraPorId(idCompra);
         String nombreProducto = con.obtenerNombreProductoPorId(detalle.getId_producto());
+        int cantidad = con.obtenerCantidadDetallePorCompra(idCompra);
+        double precio=con.obtenerPrecioTotalPorCompra(idCompra);
 
         lblProducto.setText(nombreProducto);
-       
+        lblCantidaActual.setText(String.valueOf(cantidad));
+        lblPrecioActual.setText(String.valueOf(precio));
 
     }
 }

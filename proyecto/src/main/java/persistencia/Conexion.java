@@ -395,4 +395,46 @@ public class Conexion {
 
     return nombre;
 }
+    public int obtenerCantidadDetallePorCompra(int idCompra) {
+        int cantidad = 0;
+        String sql = "SELECT COUNT(*) AS total FROM detalle_compra WHERE id_compra = ?";
+
+        try (Connection cn = getConnection();
+            PreparedStatement ps = cn.prepareStatement(sql)) {
+
+            ps.setInt(1, idCompra);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+            cantidad = rs.getInt("total");
+            }
+
+            } catch (SQLException e) {
+            System.err.println("Error al obtener el nombre del producto: " + e.getMessage());
+             }
+
+            return cantidad;
+}
+    
+    public double obtenerPrecioTotalPorCompra(int idCompra) {
+        double total = 0.0;
+        String sql = "SELECT SUM(cantidad * precio) AS total FROM detalle_compra WHERE id_compra = ?";
+
+        try (Connection cn = getConnection();
+        PreparedStatement ps = cn.prepareStatement(sql)) {
+
+        ps.setInt(1, idCompra);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            total = rs.getDouble("total");
+            }
+
+             } catch (SQLException e) {
+                   System.err.println("Error al obtener el nombre del producto: " + e.getMessage());
+            }
+
+
+        return total;
+        }
 }
