@@ -23,7 +23,8 @@ Proyecto Gestión compras con MariaDB. Equipo: Ana, Usue, Kamila, Alex
 
 ## 👨‍💻 Autores
 
-Creado por Usue(https://github.com/Lechuguita05) 💡
-           Ana(https://github.com/AnaRubio04) 💡
-           Kamila(https://github.com/Kamila08-dr) 💡
-           Alex(https://github.com/arodriguezd11) 💡
+Creado por 
+💡Usue(https://github.com/Lechuguita05) 
+💡Ana(https://github.com/AnaRubio04) 
+💡Kamila(https://github.com/Kamila08-dr) 
+💡Alex(https://github.com/arodriguezd11) 
