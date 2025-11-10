@@ -13,7 +13,7 @@ CREATE OR REPLACE TABLE compras (
 	id_proveedor INT,
 	fecha DATE NOT NULL,
 	
-	CONSTRAINT fk_id_pro FOREIGN KEY (id_proveedor) REFERENCES proveedores(id_proveedor)
+	CONSTRAINT fk_id_pro FOREIGN KEY (id_proveedor) REFERENCES proveedores(id_proveedor) ON DELETE CASCADE
 );
 
 CREATE OR REPLACE TABLE productos (
@@ -23,7 +23,7 @@ CREATE OR REPLACE TABLE productos (
 	precio_unitario DECIMAL(10,2) NOT NULL,
 	stock_actual INT NOT NULL,
 	
-	CONSTRAINT fk_id_pro_p FOREIGN KEY (id_proveedor) REFERENCES proveedores(id_proveedor)
+	CONSTRAINT fk_id_pro_p FOREIGN KEY (id_proveedor) REFERENCES proveedores(id_proveedor) ON DELETE CASCADE
 );
 
 CREATE OR REPLACE TABLE detalle_compra (
@@ -34,9 +34,9 @@ CREATE OR REPLACE TABLE detalle_compra (
 	cantidad INT NOT NULL,
 	precio DECIMAL(10,2),
 	
-	CONSTRAINT fk_id_com FOREIGN KEY (id_compra) REFERENCES compras(id_compra),
-	CONSTRAINT fk_id_prod FOREIGN KEY (id_producto) REFERENCES productos(id_producto),
-	CONSTRAINT fk_id_pro_d FOREIGN KEY (id_proveedor) REFERENCES proveedores(id_proveedor),
+	CONSTRAINT fk_id_com FOREIGN KEY (id_compra) REFERENCES compras(id_compra) ON DELETE CASCADE,
+	CONSTRAINT fk_id_prod FOREIGN KEY (id_producto) REFERENCES productos(id_producto) ON DELETE CASCADE,
+	CONSTRAINT fk_id_pro_d FOREIGN KEY (id_proveedor) REFERENCES proveedores(id_proveedor) ON DELETE SET NULL,
 	
 	CONSTRAINT ck_cantidad CHECK (cantidad>0)
 );
