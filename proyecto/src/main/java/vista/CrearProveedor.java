@@ -100,8 +100,9 @@ public class CrearProveedor extends javax.swing.JFrame {
         String email = txtEmail.getText();
         String contacto = txtContacto.getText();
         String direccion = txtDireccion.getText();
+        
         if (nombre.isEmpty() || direccion.isEmpty() || contacto.isEmpty() || email.isEmpty()) {
-            JOptionPane.showInternalMessageDialog(this, "Los campos son obligatorios");
+            JOptionPane.showMessageDialog(this, "Los campos son obligatorios");
             return;
         }
 
