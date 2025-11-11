@@ -116,6 +116,12 @@ public class ActualizarPrecio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un producto y escribir un precio nuevo.");
             return;
         }
+        
+        if(!textoPrecio.matches("\\d+(\\.\\d+)?")){
+            JOptionPane.showMessageDialog(null, "El precio debe ser un número válido");
+            txtNuevoPrecio.setText("");
+            return;
+        }
 
         double nuevoPrecio = Double.parseDouble(textoPrecio);
 
@@ -123,6 +129,9 @@ public class ActualizarPrecio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El precio debe ser mayor que 0.");
             return;
         }
+        
+        
+        
         con.actualizarPrecioProducto(producto, nuevoPrecio);
          productos = con.sacarIdProductos();
         
