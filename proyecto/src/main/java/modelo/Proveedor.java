@@ -9,11 +9,12 @@ package modelo;
  * @author User
  */
 public class Proveedor {
-   private int idProveedor;
-   private String nombre;
-   private String email;
-   private String direccion;
-   private String contacto;
+
+    private int idProveedor;
+    private String nombre;
+    private String email;
+    private String direccion;
+    private String contacto;
 
     public Proveedor(int idProveedor, String nombre, String email, String direccion, String contacto) {
         this.idProveedor = idProveedor;
@@ -25,12 +26,10 @@ public class Proveedor {
 
     public Proveedor(String nombre, String email, String direccion, String contacto) {
         this.nombre = nombre;
-        this.email = email;
+        setEmail(email);
         this.direccion = direccion;
         setContacto(contacto);
     }
-    
-   
 
     public int getIdProveedor() {
         return idProveedor;
@@ -53,6 +52,12 @@ public class Proveedor {
     }
 
     public void setEmail(String email) {
+        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+
+        if (!email.matches(regex)) {
+            throw new IllegalArgumentException("El formato del email no es válido.");
+        }
+
         this.email = email;
     }
 
@@ -75,5 +80,5 @@ public class Proveedor {
             throw new IllegalArgumentException("Número de teléfono no válido: " + contacto);
         }
     }
-   
+
 }
