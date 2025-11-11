@@ -134,7 +134,7 @@ public class Conexion {
                      SELECT c.id_compra, d.id_proveedor,d.id_producto,d.cantidad, d.precio, c.fecha  
                      FROM compras c INNER JOIN detalle_compra d 
                      ON c.id_compra=d.id_compra 
-                     WHERE d.id_producto=?;
+                     WHERE d.id_proveedor=?;
                      """;
 
         try (Connection con=getConnection();
