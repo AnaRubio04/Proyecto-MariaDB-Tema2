@@ -24,13 +24,13 @@ Permite realizar operaciones CRUD, introducir datos eliminados a la tabla de his
 ## 🧮 Dependencias necesarias
 
 - Driver necesario para conectar el entorno con la base de datos (Conector)
-
+```xml
 <dependency>
     <groupId>com.mysql</groupId>
     <artifactId>mysql-connector-j</artifactId>
     <version>9.2.0</version>
 </dependency>
-
+```
 
 ## 🧠 Tecnologías
 
