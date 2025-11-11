@@ -329,7 +329,7 @@ public class Conexion {
 
     public ArrayList<Integer> obtenerIdsCompras() {
         ArrayList<Integer> compras = new ArrayList<>();
-        String sql = "SELECT id_compra FROM compras ORDER BY id_compra";
+        String sql = "SELECT id_compra FROM detalle_compra ORDER BY id_compra";
 
         try (Connection con = getConnection(); 
               PreparedStatement ps = con.prepareStatement(sql);
