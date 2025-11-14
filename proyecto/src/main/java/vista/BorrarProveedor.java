@@ -111,7 +111,7 @@ public class BorrarProveedor extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnBorrarActionPerformed
 
-    /**
+    /*
      * @param args the command line arguments
      */
 //    public static void main(String args[]) {

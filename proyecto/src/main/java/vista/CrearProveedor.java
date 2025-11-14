@@ -136,7 +136,7 @@ public class CrearProveedor extends javax.swing.JFrame {
         txtContacto.setText("");
         txtDireccion.setText("");
     }
-    /**
+    /*
          * @param args the command line arguments
          */
 //    public static void main(String args[]) {

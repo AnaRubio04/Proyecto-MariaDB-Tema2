@@ -164,7 +164,7 @@ public class ActualizarPrecio extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cmBoxProductosActionPerformed
 
-    /**
+    /*
      * @param args the command line arguments
      */
 //    public static void main(String args[]) {
