@@ -19,15 +19,18 @@ import modelo.Producto;
 import modelo.Proveedor;
 
 /**
- *
- * @author Diurno
+ * Clase que crea la conexión entre el entorno y la base de dato
+ * @author Ana, Kamila, Usue, Alex
  */
 public class Conexion {
-
+/** Variables estaticas para la conexion de la base de datos, url del conector, usuario y contraseña. */
     private static String URL = "jdbc:mysql://localhost:3306/gestion_compras";
     private static String USER = "root";
     private static String PASSWORD = "";
-
+/**
+ * Metodo que obtiene la conexion con la base de datos
+ * @return devuelve la conexion si ha salido y bien y null si no se ha podido conectar
+ */
     public static Connection getConnection() {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
@@ -36,7 +39,13 @@ public class Conexion {
             return null;
         }
     }
-
+/**
+ * Metodo para insertar un proveedor en mi base de datos
+ * @param nombre nombre del proveedor
+ * @param contacto telefono del proveedor
+ * @param email email del proveedor
+ * @param direccion direccion del proveedor
+ */
     public void insertarProveedor(String nombre, String contacto, String email, String direccion) {
         String sql = "INSERT INTO proveedores (nombre,contacto,email,direccion) VALUES (?,?,?,?)";
         try (Connection con=getConnection();
@@ -53,7 +62,11 @@ public class Conexion {
         }
 
     }
-
+/**
+ * Metodo para insertar la compra en la base de datos
+ * @param fecha fecha en la que se realizo la compra
+ * @param idProveedor proveedor al que se le realizo la compra
+ */
     public void insertarCompra(Date fecha, int idProveedor) {
         String sql = "INSERT INTO compras (fecha,id_proveedor) VALUES (?,?)";
         try (Connection con=getConnection();
@@ -65,7 +78,11 @@ public class Conexion {
             System.err.println("Error al insertar la compra: " + e.getMessage());
         }
     }
-
+/**
+ * Metodo para actualizar el precio del producto
+ * @param producto producto que se va a cambiar
+ * @param nuevoPrecio nuevo precio que se va a establecer
+ */
     public void actualizarPrecioProducto(String producto, double nuevoPrecio) {
         String sql = """
                      UPDATE productos 
@@ -81,7 +98,11 @@ public class Conexion {
             System.err.println("No se ha podido actualizar el producto: " + e.getMessage());
         }
     }
-
+/**
+ * Metodo que modifica el detalle de compra
+ * @param idCompra id de la compra que se va a modificar
+ * @param cantidad cantidad a la que se va a cambiar
+ */
     public void modificarDetalleCompra(int idCompra, int cantidad) {
                 String sql = """
                              UPDATE detalle_compra 
@@ -113,7 +134,10 @@ public class Conexion {
 //            System.err.println("No se ha podido eliminar el proveedor: " + e.getMessage());
 //        }
 //    }
-
+/**
+ * Metodo que elimina el proveedor
+ * @param idProveedor proveedor que se va a eliminar de la base de datos
+ */
     public void eliminarProveedor(int idProveedor) {
         String sql = "{ CALL eliminar_proveedor(?) }";
             try (Connection con = getConnection();
@@ -126,7 +150,11 @@ public class Conexion {
             System.err.println("No se ha podido eliminar el proveedor: " + e.getMessage());
         }
     }
-
+/**
+ * Metodo que consulta las compras por proveedor
+ * @param idProveedor se le pasa el id del proveedor a buscar
+ * @return devuelve un arraylist con las compras que cumplen los requisitos
+ */
     public ArrayList<CompraDetalleView> consultarCompraPorProveedor(int idProveedor) {
 
         ArrayList<CompraDetalleView> dCompras = new ArrayList<>();
@@ -159,7 +187,11 @@ public class Conexion {
         }
         return dCompras;
     }
-
+/**
+ * Metodo que consulta la compra por la fecha
+ * @param fechaBuscada fecha por la que se va a filtrar
+ * @return devuelve un arraylist con las compras que cumplen los requisitos
+ */
     public ArrayList<CompraDetalleView> consultarCompraPorFecha(Date fechaBuscada) {
 
         ArrayList<CompraDetalleView> dCompras = new ArrayList<>();
@@ -192,8 +224,13 @@ public class Conexion {
         }
         return dCompras;
     }
-
-    public ArrayList<CompraDetalleView> consultarCompraPorProveedoryFecha(int provedor, Date fechaBuscada) {
+/**
+ * 
+ * @param proveedor id de proveedor por el que se busca
+ * @param fechaBuscada fecha por la que se va a filtrar
+ * @return  devuelve un arraylist con las compras que cumplen los requisitos
+ */
+    public ArrayList<CompraDetalleView> consultarCompraPorProveedoryFecha(int proveedor, Date fechaBuscada) {
 
         ArrayList<CompraDetalleView> dCompras = new ArrayList<>();
         String sql = """
@@ -207,7 +244,7 @@ public class Conexion {
             PreparedStatement ps = con.prepareStatement(sql);){
 
             ps.setDate(1, (java.sql.Date) fechaBuscada);
-            ps.setInt(2, provedor);
+            ps.setInt(2, proveedor);
 
             ResultSet resul = ps.executeQuery();
             while (resul.next()) {
@@ -226,12 +263,17 @@ public class Conexion {
         }
         return dCompras;
     }
-
+/**
+ * Metodo que obtiene todos los proveedores
+ * @return devuelve una lista con todos los proveedores
+ */
     public ArrayList<Proveedor> obtenerProveedores() {
         ArrayList<Proveedor> proveedores = new ArrayList<>();
         String sql = "SELECT id_proveedor, nombre, email, direccion, contacto FROM proveedores";
 
-        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+        try (Connection con = getConnection();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 int id = rs.getInt("id_proveedor");
@@ -247,7 +289,10 @@ public class Conexion {
         }
         return proveedores;
     }
-
+/**
+ * Metodo que obtiene todos los ids de los productos
+ * @return devuelve una lista con los productos
+ */
     public ArrayList<Producto> sacarIdProductos() {
 
         ArrayList<Producto> productos = new ArrayList<>();
@@ -301,6 +346,10 @@ public class Conexion {
 //        }
 //        return proveedores;
 //    }
+    /**
+     * Metodo que obtiene las fechas 
+     * @return devuelve un arraylist con las compras filtradas por fecha
+     */
     public ArrayList<Compra> sacarFechas() {
 
         ArrayList<Compra> compras = new ArrayList<>();
@@ -326,7 +375,10 @@ public class Conexion {
         }
         return compras;
     }
-
+/**
+ * Metodo que obtiene todos los ids de ccompras
+ * @return devuelve un array con los ids de los detalles de compras
+ */
     public ArrayList<Integer> obtenerIdsCompras() {
         ArrayList<Integer> compras = new ArrayList<>();
         String sql = "SELECT id_compra FROM detalle_compra ORDER BY id_compra";
@@ -346,7 +398,11 @@ public class Conexion {
         return compras;
 
     }
-    
+    /**
+     * Metodo que obtiene el detalle de la compras 
+     * @param idCompra compra que se va a buscar
+     * @return devuelve el detalle de la compra
+     */
     public DetalleCompra obtenerDetalleCompraPorId(int idCompra) {
     DetalleCompra detalle = null;
     String sql = """
@@ -376,7 +432,11 @@ public class Conexion {
 
     return detalle;
 }
-    
+    /**
+     * Metodo que obtiene el nombre de producto por ID
+     * @param idProducto id de producto que se va a buscar
+     * @return devuelve elnombre del producto
+     */
     public String obtenerNombreProductoPorId(int idProducto) {
     String nombre = "";
     String sql = "SELECT nombre FROM productos WHERE id_producto = ?";
@@ -397,7 +457,11 @@ public class Conexion {
 
     return nombre;
 }
-    
+    /**
+     * Obtiene la cantidad de producto que hay en detalle compra
+     * @param idCompra id de compra por la que se va a filtrar
+     * @return la cantidad de compra
+     */
     public int obtenerCantidadDetallePorCompra(int idCompra) {
           String sql = "SELECT SUM(cantidad) AS total_cantidad FROM detalle_compra WHERE id_compra = ?";
     int totalCantidad = 0;
@@ -442,6 +506,11 @@ public class Conexion {
 //
 //        return totalPrecio;
 //        }
+    /**
+     * Metodo que obtiene el total del precio de la compra
+     * @param idCompra id de la compra por la que se va a filtrar
+     * @return devuelve el precio de la compra
+     */
     public double obtenerPrecioTotalPorCompra(int idCompra) {
     double precio = 0.0;
     String sql = """
