@@ -10,8 +10,15 @@ import modelo.DetalleCompra;
 import persistencia.Conexion;
 
 /**
+ * Ventana destinada a la modificación de compras registradas en el sistema.  
+ * 
+ * Permite seleccionar un ID de compra existente, visualizar la información
+ * actual del detalle (producto, cantidad y precio) y actualizar la cantidad
+ * adquirida. La interfaz carga automáticamente los datos de la compra
+ * seleccionada y realiza la actualización en la base de datos mediante la clase
+ * de conexión.
  *
- * @author Diurno
+ * @author Ana, Kamila, Usue, Alex
  */
 public class ModificarCompra extends javax.swing.JFrame {
 
@@ -139,7 +146,7 @@ public class ModificarCompra extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Compra modificada correctamente");
             txtCantidad.setText("");
-           // txtPrecio.setText("");
+            // txtPrecio.setText("");
             lblProducto.setText("—");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al modificar la compra: ");
@@ -202,7 +209,7 @@ public class ModificarCompra extends javax.swing.JFrame {
         DetalleCompra detalle = con.obtenerDetalleCompraPorId(idCompra);
         String nombreProducto = con.obtenerNombreProductoPorId(detalle.getId_producto());
         int cantidad = con.obtenerCantidadDetallePorCompra(idCompra);
-        double precio=con.obtenerPrecioTotalPorCompra(idCompra);
+        double precio = con.obtenerPrecioTotalPorCompra(idCompra);
 
         lblProducto.setText(nombreProducto);
         lblCantidaActual.setText(String.valueOf(cantidad));

@@ -10,8 +10,15 @@ import modelo.Proveedor;
 import persistencia.Conexion;
 
 /**
+ * Ventana que permite eliminar proveedores registrados en el sistema.
+ * 
+ * La interfaz carga automáticamente la lista de proveedores disponibles y permite
+ * seleccionar uno para su eliminación. Antes de borrar, se solicita
+ * confirmación al usuario para evitar eliminaciones accidentales. Tras la
+ * eliminación, la lista se actualiza de forma automática. Forma parte del
+ * módulo de compras y gestión de proveedores.
  *
- * @author Diurno
+ * @author Ana, Kamila, Usue, Alex
  */
 public class BorrarProveedor extends javax.swing.JFrame {
 
@@ -90,18 +97,18 @@ public class BorrarProveedor extends javax.swing.JFrame {
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         // TODO add your handling code here:
-        int seleccionado=cmBoxProveedores.getSelectedIndex();
-        
-         Proveedor provEscogido = listaProveedores.get(seleccionado);
-         
-        int confirmar = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar a " + provEscogido.getNombre() + "?", "Confirmar eliminación",JOptionPane.YES_NO_OPTION);
+        int seleccionado = cmBoxProveedores.getSelectedIndex();
+
+        Proveedor provEscogido = listaProveedores.get(seleccionado);
+
+        int confirmar = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar a " + provEscogido.getNombre() + "?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
         if (confirmar == JOptionPane.YES_OPTION) {
             con.eliminarProveedor(provEscogido.getIdProveedor());
             JOptionPane.showMessageDialog(this, "Proveedor eliminado correctamente.");
             cargarProveedores();
         }
-        
+
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     /**

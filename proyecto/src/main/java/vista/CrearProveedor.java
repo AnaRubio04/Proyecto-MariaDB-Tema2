@@ -9,8 +9,10 @@ import modelo.Proveedor;
 import persistencia.Conexion;
 
 /**
- *
- * @author Diurno
+ * Ventana grafica que permite crear un nuevo proveedor mediante un formulario.
+ * Esta clase recoge los datos ingresados por el usuario, valida campos 
+ * obligatorios y envia la informacion a la base de datos a traves de la clase.
+ * @author Ana, Kamila, Usue, Alex
  */
 public class CrearProveedor extends javax.swing.JFrame {
 

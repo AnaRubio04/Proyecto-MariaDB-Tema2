@@ -10,14 +10,21 @@ import modelo.Producto;
 import persistencia.Conexion;
 
 /**
+ * Ventana que permite actualizar el precio de los productos registrados en el
+ * sistema. 
+ * La interfaz carga automáticamente la lista de productos desde la
+ * base de datos y muestra su precio actual. El usuario puede seleccionar un
+ * producto, introducir un nuevo precio y actualizarlo en la base de datos.
+ * Forma parte del módulo de compras y facilita la modificación de precios sin
+ * acceder directamente al sistema de almacenamiento.
  *
- * @author Diurno
+ * @author Ana, Kamila, Usue, Alex
  */
 public class ActualizarPrecio extends javax.swing.JFrame {
 
     Conexion con = new Conexion();
     ArrayList<Producto> productos = new ArrayList<>();
-    
+
     /**
      * Creates new form ActualizarPrecio
      */
@@ -26,14 +33,15 @@ public class ActualizarPrecio extends javax.swing.JFrame {
         cargarDatos();
     }
 
-    public void cargarDatos(){ 
-        productos=con.sacarIdProductos();
+    public void cargarDatos() {
+        productos = con.sacarIdProductos();
         for (Producto producto : productos) {
             String a = String.valueOf(producto.getNombre());
             cmBoxProductos.addItem(a);
         }
-            
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -109,15 +117,15 @@ public class ActualizarPrecio extends javax.swing.JFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-      String producto = (String) cmBoxProductos.getSelectedItem();
+        String producto = (String) cmBoxProductos.getSelectedItem();
         String textoPrecio = txtNuevoPrecio.getText().trim();
 
-        if ( textoPrecio.isEmpty()) {
+        if (textoPrecio.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un producto y escribir un precio nuevo.");
             return;
         }
-        
-        if(!textoPrecio.matches("\\d+(\\.\\d+)?")){
+
+        if (!textoPrecio.matches("\\d+(\\.\\d+)?")) {
             JOptionPane.showMessageDialog(null, "El precio debe ser un número válido");
             txtNuevoPrecio.setText("");
             return;
@@ -129,30 +137,28 @@ public class ActualizarPrecio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El precio debe ser mayor que 0.");
             return;
         }
-        
-        
-        
+
         con.actualizarPrecioProducto(producto, nuevoPrecio);
-         productos = con.sacarIdProductos();
-        
+        productos = con.sacarIdProductos();
+
         lblPrecioActual.setText(String.valueOf(nuevoPrecio));
-          for (Producto p : productos) {
+        for (Producto p : productos) {
             if (p.getNombre().equals(producto)) {
                 p.setPrecio(nuevoPrecio);
                 break;
             }
         }
-             txtNuevoPrecio.setText("");
-               JOptionPane.showMessageDialog(null, "Precio actualizado correctamente.");
-          
+        txtNuevoPrecio.setText("");
+        JOptionPane.showMessageDialog(null, "Precio actualizado correctamente.");
+
 
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void cmBoxProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmBoxProductosActionPerformed
         // TODO add your handling code here:
-         for (Producto producto : productos) {
-            if (cmBoxProductos.getSelectedItem() != null &&
-                cmBoxProductos.getSelectedItem().equals(producto.getNombre())) {
+        for (Producto producto : productos) {
+            if (cmBoxProductos.getSelectedItem() != null
+                    && cmBoxProductos.getSelectedItem().equals(producto.getNombre())) {
                 lblPrecioActual.setText(String.valueOf(producto.getPrecio()));
             }
         }

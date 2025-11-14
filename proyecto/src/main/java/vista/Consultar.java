@@ -4,7 +4,6 @@
  */
 package vista;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
@@ -15,8 +14,19 @@ import persistencia.Conexion;
 //import vista.MenuCompraProveedor;
 
 /**
+ * Ventana de consulta que permite visualizar las compras registradas en el
+ * sistema.
  *
- * @author Diurno
+ * La interfaz ofrece tres tipos de filtros de búsqueda:
+ * Compras realizadas a un proveedor específico Compras realizadas en una fecha
+ * determinada Compras filtradas simultáneamente por proveedor y fecha
+ * Los datos se cargan desde la base de datos mediante la clase {@code Conexion}
+ * y se muestran en una tabla a través de un {@code DefaultTableModel}.
+ * Esta clase forma parte del módulo de gestión de compras y proporciona al
+ * usuario una herramienta visual para explorar y verificar información
+ * almacenada.
+ * 
+ * @author Ana, Kamila, Usue, Alex
  */
 public class Consultar extends javax.swing.JFrame {
 
@@ -25,16 +35,16 @@ public class Consultar extends javax.swing.JFrame {
     ArrayList<Proveedor> proveedores = new ArrayList<>();
     ArrayList<Compra> compras = new ArrayList<>();
     ArrayList<CompraDetalleView> viewCompras = new ArrayList<>();
-    
+
     /**
      * Creates new form Consultar
      */
     public Consultar() {
         initComponents();
         modelo = (DefaultTableModel) jTable1.getModel();
-        
+
         modelo.setRowCount(0);
-        
+
         cargarDatos();
         /*if(cmBoxProvedores.getSelectedItem().equals("Ninguno")){
             for (DetalleCompra detalle : controlador.consultarCompraPorProveedor()) {
@@ -43,13 +53,13 @@ public class Consultar extends javax.swing.JFrame {
             }
         }*/
     }
-    
-    public void cargarDatos(){
+
+    public void cargarDatos() {
         proveedores = con.obtenerProveedores();
         for (Proveedor proveedor : proveedores) {
             cmBoxProvedores.addItem(proveedor.getNombre());
         }
-        
+
         compras = con.sacarFechas();
         for (Compra compra : compras) {
             cmBoxFechas.addItem(compra.getFechaString());
@@ -168,21 +178,21 @@ public class Consultar extends javax.swing.JFrame {
         // TODO add your handling code here:
         viewCompras.clear();
         modelo.setRowCount(0);
-        
-        int id_proveedor=0;
+
+        int id_proveedor = 0;
         for (Proveedor proveedor : proveedores) {
-            if(proveedor.getNombre().equals( cmBoxProvedores.getSelectedItem())){
-                id_proveedor=proveedor.getIdProveedor();
+            if (proveedor.getNombre().equals(cmBoxProvedores.getSelectedItem())) {
+                id_proveedor = proveedor.getIdProveedor();
             }
         }
 
         viewCompras = con.consultarCompraPorProveedor(id_proveedor);
-        
+
         for (CompraDetalleView viewCompra : viewCompras) {
-            Object[] fila = {viewCompra.getId_compra(),viewCompra.getId_proveedor(),viewCompra.getId_producto(),viewCompra.getCantidad(),viewCompra.getPrecio(),viewCompra.getFechaString()};
+            Object[] fila = {viewCompra.getId_compra(), viewCompra.getId_proveedor(), viewCompra.getId_producto(), viewCompra.getCantidad(), viewCompra.getPrecio(), viewCompra.getFechaString()};
             modelo.addRow(fila);
         }
-        
+
     }//GEN-LAST:event_btnProveedorActionPerformed
 
     private void btnFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFechaActionPerformed
@@ -191,15 +201,15 @@ public class Consultar extends javax.swing.JFrame {
         modelo.setRowCount(0);
         Date fechaBuscada = null;
         for (Compra compra : compras) {
-            if(compra.getFechaString().equals(cmBoxFechas.getSelectedItem())){
-                fechaBuscada= compra.getFecha();
+            if (compra.getFechaString().equals(cmBoxFechas.getSelectedItem())) {
+                fechaBuscada = compra.getFecha();
             }
         }
-        
+
         viewCompras = con.consultarCompraPorFecha(fechaBuscada);
-        
+
         for (CompraDetalleView viewCompra : viewCompras) {
-            Object[] fila = {viewCompra.getId_compra(),viewCompra.getId_proveedor(),viewCompra.getId_producto(),viewCompra.getCantidad(),viewCompra.getPrecio(),viewCompra.getFechaString()};
+            Object[] fila = {viewCompra.getId_compra(), viewCompra.getId_proveedor(), viewCompra.getId_producto(), viewCompra.getCantidad(), viewCompra.getPrecio(), viewCompra.getFechaString()};
             modelo.addRow(fila);
         }
     }//GEN-LAST:event_btnFechaActionPerformed
@@ -210,22 +220,22 @@ public class Consultar extends javax.swing.JFrame {
         modelo.setRowCount(0);
         Date fechaBuscada = null;
         for (Compra compra : compras) {
-            if(compra.getFechaString().equals(cmBoxFechas.getSelectedItem())){
-                fechaBuscada= compra.getFecha();
+            if (compra.getFechaString().equals(cmBoxFechas.getSelectedItem())) {
+                fechaBuscada = compra.getFecha();
             }
         }
-        
-        int id_proveedor=0;
+
+        int id_proveedor = 0;
         for (Proveedor proveedor : proveedores) {
-            if(proveedor.getNombre().equals( cmBoxProvedores.getSelectedItem())){
-                id_proveedor=proveedor.getIdProveedor();
+            if (proveedor.getNombre().equals(cmBoxProvedores.getSelectedItem())) {
+                id_proveedor = proveedor.getIdProveedor();
             }
         }
-        
+
         viewCompras = con.consultarCompraPorProveedoryFecha(id_proveedor, fechaBuscada);
-        
+
         for (CompraDetalleView viewCompra : viewCompras) {
-            Object[] fila = {viewCompra.getId_compra(),viewCompra.getId_proveedor(),viewCompra.getId_producto(),viewCompra.getCantidad(),viewCompra.getPrecio(),viewCompra.getFechaString()};
+            Object[] fila = {viewCompra.getId_compra(), viewCompra.getId_proveedor(), viewCompra.getId_producto(), viewCompra.getCantidad(), viewCompra.getPrecio(), viewCompra.getFechaString()};
             modelo.addRow(fila);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -278,5 +288,5 @@ public class Consultar extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
-       
+
 }
