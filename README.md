@@ -57,6 +57,8 @@ https://www.canva.com/design/DAG3uUwEj9s/UOWwEdKJJg-aF859kxuZUQ/view?utm_content
 ## 📖JavaDoc
 [Ver Javadoc](./proyecto/javadoc/index.html)
 
+[Ver Javadoc Online](https://anarubio04.github.io/Proyecto-MariaDB-Tema2/)
+
 ## ⚙️ Estado del proyecto
 Actualmente en desarrollo. Fecha de entrega prevista para el lunes 17 de Noviembre.
 
