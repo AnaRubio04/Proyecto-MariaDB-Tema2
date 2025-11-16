@@ -9,6 +9,7 @@ Permite realizar operaciones CRUD, introducir datos eliminados a la tabla de his
 - [Dependencias necesarias](#dependencias-necesarias)
 - [Tecnologías](#tecnologías)
 - [Autores](#autores)
+- [Presentacion](#Presentacion)
 - [Estado del proyecto](#-estado-del-proyecto)
 - [Licencia](#-licencia)
 
@@ -48,6 +49,9 @@ Creado por
 💡Ana(https://github.com/AnaRubio04) 
 💡Kamila(https://github.com/Kamila08-dr) 
 💡Alex(https://github.com/arodriguezd11) 
+
+## ✨ Presentacion
+https://www.canva.com/design/DAG3uUwEj9s/UOWwEdKJJg-aF859kxuZUQ/view?utm_content=DAG3uUwEj9s&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h324e1ca261
 
 ## ⚙️ Estado del proyecto
 Actualmente en desarrollo. Fecha de entrega prevista para el lunes 17 de Noviembre.
