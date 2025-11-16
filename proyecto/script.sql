@@ -82,12 +82,11 @@ INSERT INTO compras (id_proveedor, fecha) VALUES
 
 INSERT INTO detalle_compra (id_compra, id_producto, id_proveedor, cantidad, precio) VALUES
 (1, 1, 1, 5, 2500.00),
-(1, 2, 1, 10, 80.00),
-(2, 3, 2, 4, 950.00),
-(3, 4, 3, 6, 150.00),
-(4, 5, 4, 3, 1200.00),
-(5, 6, 5, 20, 25.00),
-(6, 7, 6, 2, 650.00);
+(2, 2, 2, 4, 950.00),
+(3, 3, 3, 6, 150.00),
+(4, 4, 4, 3, 1200.00),
+(5, 5, 5, 20, 25.00),
+(6, 6, 6, 2, 650.00);
 
 
 DELIMITER $$
