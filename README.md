@@ -10,6 +10,7 @@ Permite realizar operaciones CRUD, introducir datos eliminados a la tabla de his
 - [Tecnologías](#tecnologías)
 - [Autores](#autores)
 - [Presentacion](#Presentacion)
+- [JavaDoc](#JavaDoc)
 - [Estado del proyecto](#-estado-del-proyecto)
 - [Licencia](#-licencia)
 
@@ -52,6 +53,9 @@ Creado por
 
 ## ✨ Presentacion
 https://www.canva.com/design/DAG3uUwEj9s/UOWwEdKJJg-aF859kxuZUQ/view?utm_content=DAG3uUwEj9s&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h324e1ca261
+
+## 📖JavaDoc
+[Ver Javadoc](./proyecto/javadoc/index.html)
 
 ## ⚙️ Estado del proyecto
 Actualmente en desarrollo. Fecha de entrega prevista para el lunes 17 de Noviembre.
