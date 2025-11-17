@@ -11,6 +11,7 @@ Permite realizar operaciones CRUD, introducir datos eliminados a la tabla de his
 - [Autores](#autores)
 - [Presentacion](#Presentacion)
 - [JavaDoc](#JavaDoc)
+- [Enlace Trello](#Trello)
 - [Estado del proyecto](#-estado-del-proyecto)
 - [Licencia](#-licencia)
 
@@ -52,12 +53,15 @@ Creado por
 💡Alex(https://github.com/arodriguezd11) 
 
 ## ✨ Presentacion
-https://www.canva.com/design/DAG3uUwEj9s/UOWwEdKJJg-aF859kxuZUQ/view?utm_content=DAG3uUwEj9s&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h324e1ca261
+[Presentación](https://www.canva.com/design/DAG3uUwEj9s/UOWwEdKJJg-aF859kxuZUQ/view?utm_content=DAG3uUwEj9s&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h324e1ca261)
 
-## 📖JavaDoc
+## 📖 JavaDoc
 [Ver Javadoc](./proyecto/javadoc/index.html)
 
 [Ver Javadoc Online](https://anarubio04.github.io/Proyecto-MariaDB-Tema2/)
+
+## 📋 Trello
+[Trello](https://trello.com/invite/b/69049484a4e1657cf7940fe0/ATTI87a21460ffb94333901fd44449c1eb657801237F/proyecto-mariadb)
 
 ## ⚙️ Estado del proyecto
 Actualmente en desarrollo. Fecha de entrega prevista para el lunes 17 de Noviembre.
