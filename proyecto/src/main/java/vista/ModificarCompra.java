@@ -7,7 +7,7 @@ package vista;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.DetalleCompra;
-import persistencia.Conexion;
+import controlador.Conexion;
 
 /**
  * Ventana destinada a la modificación de compras registradas en el sistema.  

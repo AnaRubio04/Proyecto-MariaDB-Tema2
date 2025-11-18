@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.Compra;
 import modelo.CompraDetalleView;
 import modelo.Proveedor;
-import persistencia.Conexion;
+import controlador.Conexion;
 //import vista.MenuCompraProveedor;
 
 /**

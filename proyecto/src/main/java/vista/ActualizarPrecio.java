@@ -7,7 +7,7 @@ package vista;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Producto;
-import persistencia.Conexion;
+import controlador.Conexion;
 
 /**
  * Ventana que permite actualizar el precio de los productos registrados en el

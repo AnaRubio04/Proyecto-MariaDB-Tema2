@@ -7,7 +7,7 @@ package vista;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Proveedor;
-import persistencia.Conexion;
+import controlador.Conexion;
 
 /**
  * Ventana que permite eliminar proveedores registrados en el sistema.

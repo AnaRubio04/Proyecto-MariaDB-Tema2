@@ -6,7 +6,7 @@ package vista;
 
 import javax.swing.JOptionPane;
 import modelo.Proveedor;
-import persistencia.Conexion;
+import controlador.Conexion;
 
 /**
  * Ventana grafica que permite crear un nuevo proveedor mediante un formulario.
