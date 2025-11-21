@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.DetalleCompra;
 import controlador.Conexion;
+import java.awt.HeadlessException;
 
 /**
- * Ventana destinada a la modificación de compras registradas en el sistema.  
- * 
+ * Ventana destinada a la modificación de compras registradas en el sistema.
+ *
  * Permite seleccionar un ID de compra existente, visualizar la información
  * actual del detalle (producto, cantidad y precio) y actualizar la cantidad
  * adquirida. La interfaz carga automáticamente los datos de la compra
@@ -72,6 +73,8 @@ public class ModificarCompra extends javax.swing.JFrame {
         cantidad = new javax.swing.JLabel();
         cantidad1 = new javax.swing.JLabel();
         lblCantidaActual = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        lblidCompra = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(500, 350));
@@ -81,7 +84,7 @@ public class ModificarCompra extends javax.swing.JFrame {
         jLabel1.setText("Modificar Compra");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, -1));
 
-        jLabel2.setText("ID de compra:");
+        jLabel2.setText("ID de detalle:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 82, -1, -1));
 
         getContentPane().add(cmBoxCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 71, 100, 30));
@@ -124,6 +127,10 @@ public class ModificarCompra extends javax.swing.JFrame {
         lblCantidaActual.setText("cant");
         getContentPane().add(lblCantidaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 120, -1, -1));
 
+        jLabel6.setText("ID de compra:");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, -1, -1));
+        getContentPane().add(lblidCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, -1, -1));
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -137,18 +144,18 @@ public class ModificarCompra extends javax.swing.JFrame {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         try {
-            int idCompra = Integer.parseInt((String) cmBoxCompras.getSelectedItem());
+            int idDetalle = Integer.parseInt((String) cmBoxCompras.getSelectedItem());
             int cantidad = Integer.parseInt(txtCantidad.getText());
             //double precio = Double.parseDouble(txtPrecio.getText());
-            mostrarDatosCompra(idCompra);
+            mostrarDatosCompra(idDetalle);
 
-            con.modificarDetalleCompra(idCompra, cantidad);
+            con.modificarDetalleCompra(idDetalle, cantidad);
 
             JOptionPane.showMessageDialog(this, "Compra modificada correctamente");
             txtCantidad.setText("");
             // txtPrecio.setText("");
             lblProducto.setText("—");
-        } catch (Exception e) {
+        } catch (HeadlessException | NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Error al modificar la compra: ");
         }
         cargarIdsCompras();
@@ -200,20 +207,24 @@ public class ModificarCompra extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel lblCantidaActual;
     private javax.swing.JLabel lblPrecioActual;
     private javax.swing.JLabel lblProducto;
+    private javax.swing.JLabel lblidCompra;
     private javax.swing.JTextField txtCantidad;
     // End of variables declaration//GEN-END:variables
-  private void mostrarDatosCompra(int idCompra) {
-        DetalleCompra detalle = con.obtenerDetalleCompraPorId(idCompra);
-        String nombreProducto = con.obtenerNombreProductoPorId(detalle.getId_producto());
-        int cantidad = con.obtenerCantidadDetallePorCompra(idCompra);
-        double precio = con.obtenerPrecioTotalPorCompra(idCompra);
+  private void mostrarDatosCompra(int idDetalle) {
+        DetalleCompra detalle = con.obtenerDetalleCompraPorId(idDetalle);
+        String nombreProducto = con.obtenerNombreProductoDetalle(detalle.getId_compra(), detalle.getId_producto(), detalle.getId_proveedor());
+        int cantidad = con.obtenerCantidadProductoDetalle(detalle.getId_compra(), detalle.getId_producto(), detalle.getId_proveedor());
+        double precio = con.obtenerPrecioDetalleCompra(detalle.getId_compra(), detalle.getId_producto(), detalle.getId_proveedor());
+        int compra = con.obtenerIdCompra(Integer.parseInt(cmBoxCompras.getSelectedItem().toString()), detalle.getId_producto(), detalle.getId_proveedor());
 
         lblProducto.setText(nombreProducto);
         lblCantidaActual.setText(String.valueOf(cantidad));
         lblPrecioActual.setText(String.valueOf(precio));
+        lblidCompra.setText(String.valueOf(compra));
 
     }
 }
